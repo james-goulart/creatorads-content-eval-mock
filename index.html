@@ -44,7 +44,7 @@
   <div class="ml-auto flex items-center gap-2">
     <!-- brand selector (como no produto atual) -->
     <button class="flex items-center gap-2 rounded-md bg-white/10 hover:bg-white/20 pl-1.5 pr-2 py-1" title="Trocar de marca">
-      <span class="size-6 rounded bg-gradient-to-br from-emerald-400 to-teal-500 grid place-items-center text-[10px] font-bold text-white">H+</span>
+      <span class="size-6 rounded bg-gradient-to-br from-sky-500 to-blue-600 grid place-items-center text-[10px] font-bold text-white">H+</span>
       <span class="text-sm font-medium hidden sm:block">Hidrata+</span>
       <i data-lucide="chevrons-up-down" class="size-3.5 text-slate-300"></i>
     </button>
@@ -79,7 +79,7 @@
     <div class="bg-white border-b px-4 flex items-center gap-1 shrink-0">
       <button class="status-tab active flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes">Pendentes <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">12</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="reprovados">Reprovados <span class="text-[10px] bg-red-100 text-red-700 rounded-full px-1.5">4</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados">Aprovados <span class="text-[10px] bg-emerald-100 text-emerald-700 rounded-full px-1.5">37</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados">Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes">Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
     </div>
 
@@ -102,7 +102,7 @@
         </div>
         <div class="flex-1 overflow-y-auto p-2 space-y-1">
           <button class="w-full text-left rounded-md bg-slate-900 text-white px-3 py-2 text-sm"><div class="font-medium">Momento 1</div><div class="text-[11px] text-slate-300">Reels · 3 conteúdos</div></button>
-          <button class="w-full text-left rounded-md hover:bg-slate-100 px-3 py-2 text-sm"><div class="font-medium">Momento 2 <span class="text-[10px] text-emerald-600">(Publicado)</span></div><div class="text-[11px] text-slate-400">Stories · 1 conteúdo</div></button>
+          <button class="w-full text-left rounded-md hover:bg-slate-100 px-3 py-2 text-sm"><div class="font-medium">Momento 2 <span class="text-[10px] text-blue-600">(Publicado)</span></div><div class="text-[11px] text-slate-400">Stories · 1 conteúdo</div></button>
           <button class="w-full text-left rounded-md hover:bg-slate-100 px-3 py-2 text-sm"><div class="font-medium">Momento 3</div><div class="text-[11px] text-slate-400">TikTok · 2 conteúdos</div></button>
         </div>
       </aside>
@@ -150,7 +150,7 @@
           <label class="text-xs font-semibold text-slate-600 flex items-center gap-1"><i data-lucide="message-square-text" class="size-4"></i> Feedback ao creator <span class="font-normal text-slate-400">(opcional)</span></label>
           <textarea id="feedbackSlot" rows="2" class="w-full text-sm rounded-md border px-2 py-1.5 resize-none focus:outline-none focus:ring-2 focus:ring-violet-200" placeholder="Escreva um feedback para o creator…"></textarea>
           <div id="failHint" class="text-[11px] text-center text-red-600"></div>
-          <button id="decisionBtn" class="w-full rounded-md py-2.5 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors">Aprovar</button>
+          <button id="decisionBtn" class="w-full rounded-md py-2.5 text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors">Aprovar</button>
         </div>
       </section>
 
@@ -249,7 +249,8 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="toggle-right" class="size-4 text-violet-600"></i> 4. Avaliação por toggles</h3>
-        <p class="mt-1">Cada item de avaliação tem um toggle que <b>já vem na posição avaliada pela Guardian</b>. O revisor só mexe quando <b>discorda</b> — e a linha fica <b>destacada em roxo</b> quando diverge da IA. Mantemos o <b>✓/✗ da Guardian</b> ao lado. À esquerda, <b>timestamps clicáveis</b> levam o vídeo ao instante em que a diretriz é verificada.</p>
+        <p class="mt-1">Cada item de avaliação tem um toggle que <b>já vem na posição avaliada pela Guardian</b>. O revisor só mexe quando <b>discorda</b> — e a linha fica <b>destacada em roxo</b> quando diverge da IA. Mantemos o <b>✓/✗ da Guardian</b> ao lado.</p>
+        <p class="mt-1 rounded-md bg-blue-50 border border-blue-200 px-2.5 py-2"><b>⏱️ Horários clicáveis:</b> à esquerda de cada item há os instantes em que a diretriz aparece — <b>clique no horário e o vídeo pula direto para aquele momento</b>.</p>
         <p class="mt-1"><b>Qualidade de áudio</b> e <b>Segurança de marca</b> agora são <b>acordeões</b> (começam recolhidos) com subitens (ex.: Música com direitos autorais, Discurso de ódio, Conteúdo sensível…). O <b>toggle do topo é um reflexo</b>: fica desligado se qualquer subitem estiver desligado, e a linha do topo fica <b>roxa</b> quando você altera algum subitem.</p>
       </div>
 
@@ -377,8 +378,8 @@ const CREATORS = {
     timeline:[
       { type:"round", text:"Rodada 1" },
       { type:"submit", title:"Conteúdo enviado (v1)", when:"29/05 10:02" },
-      { type:"system", icon:"bot", color:"bg-emerald-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"29/05 10:03" },
-      { type:"system", icon:"check", color:"bg-emerald-500", title:"Conteúdo aprovado", sub:"James Goulart", when:"29/05 11:30" },
+      { type:"system", icon:"bot", color:"bg-blue-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"29/05 10:03" },
+      { type:"system", icon:"check", color:"bg-blue-500", title:"Conteúdo aprovado", sub:"James Goulart", when:"29/05 11:30" },
     ],
   },
   contestacoes: {
@@ -404,13 +405,13 @@ function timeChips(times){
 }
 function toggleHTML(state){ // state: ok | fail
   const on = state === "ok";
-  return `<button class="toggle relative w-11 h-6 rounded-full transition-colors ${on?'bg-emerald-500':'bg-red-500'}" data-toggle title="Avaliação humana">
+  return `<button class="toggle relative w-11 h-6 rounded-full transition-colors ${on?'bg-blue-500':'bg-red-500'}" data-toggle title="Avaliação humana">
     <span class="knob absolute top-0.5 size-5 rounded-full bg-white shadow transition-all ${on?'left-[22px]':'left-0.5'}"></span>
   </button>`;
 }
 function lineHTML(item, id){
   const gIcon = item.guardian === "ok"
-    ? '<i data-lucide="circle-check-big" class="size-4 text-emerald-600"></i>'
+    ? '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>'
     : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
   return `
   <div class="line flex items-start gap-2 rounded-md border px-2 py-1.5 text-sm" data-id="${id}" data-label="${item.label}" data-guardian="${item.guardian}" data-state="${item.guardian}">
@@ -427,15 +428,15 @@ const fill = (sel, arr) => document.querySelector(`[data-group="${sel}"]`).inner
 
 /* ---------- accordions (audio / brand): derived parent toggle ---------- */
 function parentToggleVisual(on){
-  return `<span class="ptoggle relative inline-block w-11 h-6 rounded-full ${on?'bg-emerald-500':'bg-red-500'}" data-parent-toggle title="Reflexo das subavaliações — desligado se qualquer item estiver desligado"><span class="knob absolute top-0.5 size-5 rounded-full bg-white shadow ${on?'left-[22px]':'left-0.5'}"></span></span>`;
+  return `<span class="ptoggle relative inline-block w-11 h-6 rounded-full ${on?'bg-blue-500':'bg-red-500'}" data-parent-toggle title="Reflexo das subavaliações — desligado se qualquer item estiver desligado"><span class="knob absolute top-0.5 size-5 rounded-full bg-white shadow ${on?'left-[22px]':'left-0.5'}"></span></span>`;
 }
 function paintToggleEl(el, on){
-  el.classList.toggle('bg-emerald-500', on); el.classList.toggle('bg-red-500', !on);
+  el.classList.toggle('bg-blue-500', on); el.classList.toggle('bg-red-500', !on);
   const k = el.querySelector('.knob'); k.classList.toggle('left-[22px]', on); k.classList.toggle('left-0.5', !on);
 }
 function buildAccordion(groupId, iconName, label, children){
   const gOk = children.every(c => c.guardian === 'ok');
-  const gIcon = gOk ? '<i data-lucide="circle-check-big" class="size-4 text-emerald-600"></i>' : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
+  const gIcon = gOk ? '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>' : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
   document.querySelector(`[data-accordion-mount="${groupId}"]`).innerHTML = `
     <div class="rounded-md border overflow-hidden" data-accordion="${groupId}">
       <div class="acc-head flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-slate-50">
@@ -504,7 +505,7 @@ function paintToggle(line){
   if(edited){ line.style.background = "#ddd6fe"; line.style.borderColor = "#7c3aed"; line.style.boxShadow = "inset 4px 0 0 0 #6d28d9"; }
   else { line.style.background = ""; line.style.borderColor = ""; line.style.boxShadow = ""; }
   const tg = line.querySelector("[data-toggle]"), knob = tg.querySelector(".knob");
-  tg.classList.toggle("bg-emerald-500", on); tg.classList.toggle("bg-red-500", !on);
+  tg.classList.toggle("bg-blue-500", on); tg.classList.toggle("bg-red-500", !on);
   knob.classList.toggle("left-[22px]", on); knob.classList.toggle("left-0.5", !on);
 }
 
@@ -536,15 +537,15 @@ function refreshDecision(){
     else { decision = "none"; setBtn("Reprovado — altere avaliação para contestar", "bg-slate-200 text-slate-500", true); }
     return;
   }
-  if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-emerald-700 text-white", true); return; }
+  if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-blue-700 text-white", true); return; }
   if(anyFail()){ decision = "reject"; setBtn("Recusar", "bg-red-600 text-white hover:bg-red-700"); }
-  else { decision = "approve"; setBtn("Aprovar", "bg-emerald-600 text-white hover:bg-emerald-700"); }
+  else { decision = "approve"; setBtn("Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
 }
 
 /* ---------- status tabs ---------- */
 const statusPill = document.getElementById("statusPill");
 const contestationBox = document.getElementById("contestationBox");
-const pill = { pendentes:["Pendente","bg-amber-100 text-amber-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-emerald-100 text-emerald-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
+const pill = { pendentes:["Pendente","bg-amber-100 text-amber-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
 function resetLines(){ // back to Guardian's initial position (clears purple)
   document.querySelectorAll(".line").forEach(l => { l.dataset.state = l.dataset.guardian; paintToggle(l); });
   updateGroup("audio"); updateGroup("brand");
@@ -584,7 +585,7 @@ btn.addEventListener("click", () => {
     document.getElementById("rejectedList").innerHTML = rejected.map(r => `<li class="flex items-center gap-2"><i data-lucide="circle-x" class="size-4 text-red-600 shrink-0"></i>${r}</li>`).join("");
     document.getElementById("modalFeedback").value = document.getElementById("feedbackSlot").value;
     modal.hidden = false; lucide.createIcons();
-  } else if(decision === "approve"){ setBtn("Aprovado ✓", "bg-emerald-700 text-white", true); }
+  } else if(decision === "approve"){ setBtn("Aprovado ✓", "bg-blue-700 text-white", true); }
   else if(decision === "contestar"){ setBtn("Contestação enviada", "bg-violet-700 text-white", true); }
 });
 const closeModal = () => modal.hidden = true;

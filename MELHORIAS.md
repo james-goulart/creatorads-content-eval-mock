@@ -44,7 +44,7 @@
 - O botão fica junto da Análise, com um **campo de feedback ao creator logo acima**.
 - A regra segue as avaliações:
   - alguma linha recusada → botão **"Recusar"** (vermelho);
-  - todas aprovadas → botão **"Aprovar"** (verde).
+  - todas aprovadas → botão **"Aprovar"** (azul).
 - Removemos o antigo botão "X" de reprovar.
 - Uma **dica ao vivo** mostra quantas diretrizes ainda estão recusadas (ex.: *"2 diretrizes recusadas — aprove ou recuse o conteúdo"*), para o revisor entender por que o botão ainda está vermelho.
 - Ao clicar em **Recusar**, abre um **pop-up** com as diretrizes recusadas e o feedback a ser enviado ao creator.
