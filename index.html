@@ -360,7 +360,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="layers" class="size-4 text-[#FF007E]"></i> 7. Comportamento por aba</h3>
-        <p class="mt-1"><b>Reprovados:</b> “altere avaliação para reverter” → vira <b>“Contestar”</b> (se ainda há recusa) ou <b>“Reverter e Aprovar”</b> (se tudo ficou ok). <b>Contestações:</b> a <b>contestação do creator aparece acima do botão</b>, com copy <b>“Aprovar/Reprovar Contestação”</b>.</p>
+        <p class="mt-1"><b>Reprovados:</b> “altere avaliação para reverter” → vira <b>“Manter Reprovação e Corrigir Guardian”</b> (se ainda há item reprovado) ou <b>“Reverter e Aprovar”</b> (se tudo ficou ok). <b>Contestações:</b> a <b>contestação do creator aparece acima do botão</b>, com copy <b>“Aprovar/Reprovar Contestação”</b>.</p>
       </div>
 
       <div>
@@ -654,7 +654,7 @@ function refreshDecision(){
   if(currentStatus === "reprovados"){
     if(!anyEdited()){ decision = "none"; setBtn("Reprovado — altere avaliação para reverter", "bg-slate-200 text-slate-500", true); }
     else if(!anyFail()){ decision = "reverter"; setBtn("Reverter e Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
-    else { decision = "contestar"; setBtn("Contestar", "bg-violet-600 text-white hover:bg-violet-700"); }
+    else { decision = "manter"; setBtn("Manter Reprovação e Corrigir Guardian", "bg-slate-700 text-white hover:bg-slate-800"); }
     return;
   }
   const neg = anyFail();
@@ -751,7 +751,7 @@ btn.addEventListener("click", () => {
     modal.hidden = false; lucide.createIcons();
   } else if(decision === "approve"){ setBtn(currentStatus === "contestacoes" ? "Contestação aprovada ✓" : "Aprovado ✓", "bg-blue-700 text-white", true); }
   else if(decision === "reverter"){ setBtn("Revertido e aprovado ✓", "bg-blue-700 text-white", true); }
-  else if(decision === "contestar"){ setBtn("Contestação enviada", "bg-violet-700 text-white", true); }
+  else if(decision === "manter"){ setBtn("Reprovação mantida · Guardian corrigida ✓", "bg-slate-700 text-white", true); }
 });
 const closeModal = () => modal.hidden = true;
 document.getElementById("closeModal").addEventListener("click", closeModal);
