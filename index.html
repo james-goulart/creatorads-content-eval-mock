@@ -38,13 +38,13 @@
     <span class="px-2 py-1">#501638</span><i data-lucide="chevron-right" class="size-3"></i>
     <span class="px-2 py-1 text-white font-medium">Conteúdos</span>
   </nav>
-  <button id="whatsChanged" class="absolute left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-500 hover:to-pink-500 px-4 py-1.5 text-sm font-semibold shadow-lg">
+  <button id="whatsChanged" class="absolute left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#FF007E] to-[#c026d3] hover:opacity-90 px-4 py-1.5 text-sm font-semibold shadow-lg">
     <i data-lucide="sparkles" class="size-4"></i> O que mudou?
   </button>
   <div class="ml-auto flex items-center gap-2">
     <!-- brand selector (como no produto atual) -->
     <button class="flex items-center gap-2 rounded-md bg-white/10 hover:bg-white/20 pl-1.5 pr-2 py-1" title="Trocar de marca">
-      <span class="size-6 rounded bg-gradient-to-br from-sky-500 to-blue-600 grid place-items-center text-[10px] font-bold text-white">H+</span>
+      <span class="size-6 rounded bg-gradient-to-br from-[#FF007E] to-[#c026d3] grid place-items-center text-[10px] font-bold text-white">H+</span>
       <span class="text-sm font-medium hidden sm:block">Hidrata+</span>
       <i data-lucide="chevrons-up-down" class="size-3.5 text-slate-300"></i>
     </button>
@@ -63,7 +63,7 @@
   <nav id="sideNav" class="w-16 shrink-0 relative z-30">
     <div class="navpanel absolute inset-y-0 left-0 bg-white border-r flex flex-col py-3 overflow-hidden shadow-sm">
       <a class="nav-item flex items-center gap-3 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-100"><i data-lucide="gauge" class="size-5 shrink-0"></i><span class="nav-label">Painel</span></a>
-      <a class="nav-item flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-violet-700 bg-violet-50 border-r-2 border-violet-600"><i data-lucide="table-2" class="size-5 shrink-0"></i><span class="nav-label">Campanhas</span></a>
+      <a class="nav-item flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-[#FF007E] bg-pink-50 border-r-2 border-[#FF007E]"><i data-lucide="table-2" class="size-5 shrink-0"></i><span class="nav-label">Campanhas</span></a>
       <a class="nav-item flex items-center gap-3 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-100"><i data-lucide="grid-3x3" class="size-5 shrink-0"></i><span class="nav-label">Feed</span></a>
       <a class="nav-item flex items-center gap-3 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-100"><i data-lucide="user-search" class="size-5 shrink-0"></i><span class="nav-label">Creators</span></a>
       <div class="my-2 mx-5 border-t"></div>
@@ -228,7 +228,7 @@
 <!-- ===================== "O QUE MUDOU?" MODAL ===================== -->
 <div id="changesModal" hidden class="fixed inset-0 z-50 bg-black/50 grid place-items-center p-4">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[88vh] flex flex-col overflow-hidden">
-    <div class="flex items-center gap-2 px-5 py-4 border-b bg-gradient-to-r from-violet-600 to-pink-600 text-white">
+    <div class="flex items-center gap-2 px-5 py-4 border-b bg-gradient-to-r from-[#FF007E] to-[#c026d3] text-white">
       <i data-lucide="sparkles" class="size-5"></i>
       <span class="font-semibold text-lg">O que mudou nesta tela?</span>
       <button id="closeChanges" class="ml-auto text-white/80 hover:text-white"><i data-lucide="x" class="size-5"></i></button>
@@ -275,7 +275,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="layers" class="size-4 text-violet-600"></i> 8. Comportamento por aba de status</h3>
-        <p class="mt-1"><b>Reprovados:</b> botão “Reprovado — altere avaliação para contestar” → vira <b>“Contestar”</b> ao mexer em um toggle. <b>Contestações:</b> a <b>contestação do creator aparece acima do botão</b>. O <b>creator exibido muda conforme a aba</b>, para o contexto ficar claro.</p>
+        <p class="mt-1"><b>Reprovados:</b> botão “Reprovado — altere avaliação para reverter”; ao reverter alguma avaliação vira <b>“Contestar”</b>, e se tudo ficar aprovado vira <b>“Reverter e Aprovar”</b>. <b>Contestações:</b> a <b>contestação do creator aparece acima do botão</b>. O <b>creator exibido muda conforme a aba</b>, para o contexto ficar claro.</p>
       </div>
 
       <div>
@@ -296,7 +296,7 @@
       <p class="text-xs text-slate-400 text-center">Feedbacks são muito bem-vindos! 🙏</p>
     </div>
     <div class="px-5 py-3 border-t bg-slate-50 text-right">
-      <button id="closeChanges2" class="rounded-md px-4 py-2 text-sm font-semibold bg-violet-600 text-white hover:bg-violet-700">Entendi, vou testar</button>
+      <button id="closeChanges2" class="rounded-md px-4 py-2 text-sm font-semibold bg-[#FF007E] text-white hover:opacity-90">Entendi, vou testar</button>
     </div>
   </div>
 </div>
@@ -537,7 +537,7 @@ function refreshDecision(){
     ? `${fc} ${fc>1?"itens recusados":"item recusado"} — aprove ou recuse o conteúdo`
     : "";
   if(currentStatus === "reprovados"){
-    if(!anyEdited()){ decision = "none"; setBtn("Reprovado — altere avaliação para contestar", "bg-slate-200 text-slate-500", true); }
+    if(!anyEdited()){ decision = "none"; setBtn("Reprovado — altere avaliação para reverter", "bg-slate-200 text-slate-500", true); }
     else if(!anyFail()){ decision = "reverter"; setBtn("Reverter e Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
     else { decision = "contestar"; setBtn("Contestar", "bg-violet-600 text-white hover:bg-violet-700"); }
     return;
