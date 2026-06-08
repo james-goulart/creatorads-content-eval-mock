@@ -164,7 +164,15 @@
           <label class="text-xs font-semibold text-slate-600 flex items-center gap-1"><i data-lucide="message-square-text" class="size-4"></i> Feedback ao creator <span class="font-normal text-slate-400">(opcional)</span></label>
           <textarea id="feedbackSlot" rows="2" class="w-full text-sm rounded-md border px-2 py-1.5 resize-none focus:outline-none focus:ring-2 focus:ring-violet-200" placeholder="Escreva um feedback para o creator…"></textarea>
           <div id="failHint" class="text-[11px] text-center text-red-600"></div>
-          <button id="decisionBtn" class="w-full rounded-md py-2.5 text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors">Aprovar</button>
+          <div class="flex items-center gap-2">
+            <button id="decisionBtn" class="flex-1 rounded-md py-2.5 text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors">Aprovar</button>
+            <div id="otherReasonWrap" hidden class="relative shrink-0">
+              <button id="otherReasonBtn" class="grid place-items-center rounded-md bg-slate-200 hover:bg-slate-300 size-10" title="Mais opções"><i data-lucide="ellipsis-vertical" class="size-4"></i></button>
+              <div id="otherReasonMenu" hidden class="absolute right-0 bottom-12 w-60 rounded-md border bg-white shadow-lg py-1 z-20">
+                <button id="otherReasonOpen" class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"><i data-lucide="flag" class="size-4 text-red-600"></i> Reprovar por outro motivo</button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -190,6 +198,10 @@
               <a id="cYtLink" href="https://www.youtube.com/@BocaRosa" target="_blank" rel="noopener" class="inline-flex items-center gap-1 hover:underline hover:text-slate-900">
                 <svg class="size-3.5 text-red-600" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 <span id="cYt">Boca Rosa</span>
+              </a>
+              <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="inline-flex items-center gap-1 font-medium text-slate-700 hover:text-[#25D366] hover:underline" title="Abrir conversa no WhatsApp">
+                <svg class="size-3.5 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                chat →
               </a>
             </div>
             <div id="cReceived" class="text-[11px] text-slate-400 mt-1">Recebido em 03/06/2026 às 09:04 · v2</div>
@@ -332,6 +344,24 @@
     <div class="flex justify-end gap-2 px-4 py-3 border-t bg-slate-50">
       <button id="cancelReject" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200">Cancelar</button>
       <button id="confirmReject" class="rounded-md px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700">Enviar recusa</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== "REPROVAR POR OUTRO MOTIVO" MODAL ===================== -->
+<div id="otherReasonModal" hidden class="fixed inset-0 z-50 bg-black/40 grid place-items-center p-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
+    <div class="flex items-center gap-2 px-4 py-3 border-b">
+      <i data-lucide="flag" class="size-5 text-red-600"></i><span class="font-semibold">Reprovar por outro motivo</span>
+      <button id="otherReasonClose" class="ml-auto text-slate-400 hover:text-slate-700"><i data-lucide="x" class="size-5"></i></button>
+    </div>
+    <div class="p-4 space-y-2">
+      <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Explique brevemente o motivo</label>
+      <textarea id="otherReasonText" rows="4" class="w-full text-sm rounded-md border px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-red-200" placeholder="Descreva o motivo da reprovação que não está coberto pelas diretrizes…"></textarea>
+    </div>
+    <div class="flex justify-end gap-2 px-4 py-3 border-t bg-slate-50">
+      <button id="otherReasonCancel" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200">Cancelar</button>
+      <button id="otherReasonConfirm" class="rounded-md px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700">Reprovar</button>
     </div>
   </div>
 </div>
@@ -548,7 +578,7 @@ let currentStatus = "pendentes", decision = "approve";
 function failCount(){ return [...document.querySelectorAll(".line")].filter(l => l.dataset.state === "fail").length; }
 function anyFail(){ return failCount() > 0; }
 function anyEdited(){ return [...document.querySelectorAll(".line")].some(l => l.dataset.state !== l.dataset.guardian); }
-function setBtn(label, classes, dis=false){ btn.textContent = label; btn.disabled = dis; btn.className = `w-full rounded-md py-2.5 text-sm font-semibold transition-colors ${dis?'cursor-not-allowed':''} ${classes}`; }
+function setBtn(label, classes, dis=false){ btn.textContent = label; btn.disabled = dis; btn.className = `flex-1 rounded-md py-2.5 text-sm font-semibold transition-colors ${dis?'cursor-not-allowed':''} ${classes}`; }
 function refreshDecision(){
   const fc = failCount(), fh = document.getElementById("failHint");
   fh.textContent = (fc > 0 && (currentStatus === "pendentes" || currentStatus === "contestacoes"))
@@ -560,8 +590,11 @@ function refreshDecision(){
     else { decision = "contestar"; setBtn("Contestar", "bg-violet-600 text-white hover:bg-violet-700"); }
     return;
   }
+  // "Reprovar por outro motivo" (kebab) only on the Pendentes tab
+  document.getElementById("otherReasonWrap").hidden = (currentStatus !== "pendentes");
+  document.getElementById("otherReasonMenu").hidden = true;
   if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-blue-700 text-white", true); return; }
-  if(anyFail()){ decision = "reject"; setBtn("Recusar", "bg-red-600 text-white hover:bg-red-700"); }
+  if(anyFail()){ decision = "reject"; setBtn(currentStatus === "pendentes" ? "Reprovar" : "Recusar", "bg-red-600 text-white hover:bg-red-700"); }
   else { decision = "approve"; setBtn("Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
 }
 
@@ -620,7 +653,20 @@ btn.addEventListener("click", () => {
 const closeModal = () => modal.hidden = true;
 document.getElementById("closeModal").addEventListener("click", closeModal);
 document.getElementById("cancelReject").addEventListener("click", closeModal);
-document.getElementById("confirmReject").addEventListener("click", () => { closeModal(); setBtn("Recusado ✕", "bg-red-700 text-white", true); });
+document.getElementById("confirmReject").addEventListener("click", () => { closeModal(); setBtn(currentStatus === "pendentes" ? "Reprovado ✕" : "Recusado ✕", "bg-red-700 text-white", true); });
+
+/* ---------- "Reprovar por outro motivo" (kebab, só em Pendentes) ---------- */
+const otherReasonBtn = document.getElementById("otherReasonBtn");
+const otherReasonMenu = document.getElementById("otherReasonMenu");
+const otherReasonModal = document.getElementById("otherReasonModal");
+otherReasonBtn.addEventListener("click", e => { e.stopPropagation(); otherReasonMenu.hidden = !otherReasonMenu.hidden; });
+document.addEventListener("click", () => { otherReasonMenu.hidden = true; }); // fecha ao clicar fora
+document.getElementById("otherReasonOpen").addEventListener("click", () => { otherReasonMenu.hidden = true; document.getElementById("otherReasonText").value = ""; otherReasonModal.hidden = false; lucide.createIcons(); });
+const closeOther = () => otherReasonModal.hidden = true;
+document.getElementById("otherReasonClose").addEventListener("click", closeOther);
+document.getElementById("otherReasonCancel").addEventListener("click", closeOther);
+otherReasonModal.addEventListener("click", e => { if(e.target === otherReasonModal) closeOther(); });
+document.getElementById("otherReasonConfirm").addEventListener("click", () => { closeOther(); setBtn("Reprovado ✕", "bg-red-700 text-white", true); });
 
 /* ---------- "O que mudou?" modal ---------- */
 const changesModal = document.getElementById("changesModal");
