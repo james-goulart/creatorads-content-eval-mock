@@ -324,62 +324,67 @@
       <button id="closeChanges" class="ml-auto text-white/80 hover:text-white"><i data-lucide="x" class="size-5"></i></button>
     </div>
     <div class="overflow-y-auto px-6 py-5 text-sm text-slate-700 space-y-5">
-      <p class="text-slate-500">Protótipo navegável da tela de avaliação de conteúdos. Tudo é clicável — os dados são fictícios e nada é salvo. Abaixo, o que muda em relação à versão atual e o porquê.</p>
+      <p class="text-slate-500">Protótipo navegável da tela de avaliação de conteúdos, já com <b>dados reais (anonimizados)</b> da nossa maior campanha. Tudo é clicável e nada é salvo. Abaixo, o que muda em relação à versão atual — e por quê.</p>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="layout-panel-left" class="size-4 text-violet-600"></i> 1. Layout geral</h3>
-        <p class="mt-1">O <b>vídeo fica sempre centralizado</b>, agora em 4 colunas: Momentos · Análise/Briefing + decisão · Vídeo · Linha do tempo.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="layout-panel-left" class="size-4 text-[#FF007E]"></i> 1. Layout geral</h3>
+        <p class="mt-1">O <b>vídeo fica sempre centralizado</b>, em 4 colunas: <b>Momentos</b> · <b>Análise/Briefing + Decisão</b> · <b>Vídeo</b> · <b>Linha do tempo</b>.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="panels-top-left" class="size-4 text-violet-600"></i> 2. Navegação</h3>
-        <p class="mt-1">O menu superior e o lateral continuam. <b>O que muda:</b> o menu lateral vira um <b>trilho de ícones que expande ao passar o mouse</b> (hoje é largura fixa), liberando espaço para as colunas centrais. As abas de status ganham uma <b>nova aba “Contestações”</b>, ao lado de Pendentes/Reprovados/Aprovados.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="panels-top-left" class="size-4 text-[#FF007E]"></i> 2. Navegação &amp; abas</h3>
+        <p class="mt-1">O menu lateral vira um <b>trilho de ícones que expande ao passar o mouse</b> (hoje é largura fixa), liberando espaço para o conteúdo. As abas de status ganham a <b>nova aba “Contestações”</b>. O <b>creator e a contagem (“1 de N”) mudam conforme a aba</b>.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="user-search" class="size-4 text-violet-600"></i> 3. Identificação do creator (anti-fraude)</h3>
-        <p class="mt-1"><b>Foto bem maior</b> para conferência visual foto × vídeo, com os <b>três @ (Instagram, TikTok e YouTube)</b> e o <b>Creator ID</b> num só cabeçalho. Os <b>@ são clicáveis</b> e abrem o perfil real em nova aba.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="user-search" class="size-4 text-[#FF007E]"></i> 3. Identificação do creator (anti-fraude)</h3>
+        <p class="mt-1"><b>Foto bem maior e clicável</b> — abre em <b>resolução original</b> para checar foto × vídeo. Os <b>@ de Instagram, TikTok e YouTube são clicáveis</b> (abrem o perfil real) e há um atalho de <b>WhatsApp “chat →”</b>, além do <b>Creator ID</b>.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="toggle-right" class="size-4 text-violet-600"></i> 4. Avaliação por toggles</h3>
-        <p class="mt-1">Cada item de avaliação tem um toggle que <b>já vem na posição avaliada pela Guardian</b>. O revisor só mexe quando <b>discorda</b> — e a linha fica <b>destacada em roxo</b> quando diverge da IA. Mantemos o <b>✓/✗ da Guardian</b> ao lado.</p>
-        <p class="mt-1 rounded-md bg-blue-50 border border-blue-200 px-2.5 py-2"><b>⏱️ Horários clicáveis:</b> à esquerda de cada item há os instantes em que a diretriz aparece — <b>clique no horário e o vídeo pula direto para aquele momento</b>.</p>
-        <p class="mt-1"><b>Qualidade de áudio</b> e <b>Segurança de marca</b> agora são <b>acordeões</b> (começam recolhidos) com subitens (ex.: Música com direitos autorais, Discurso de ódio, Conteúdo sensível…). O <b>toggle do topo é um reflexo</b>: fica desligado se qualquer subitem estiver desligado, e a linha do topo fica <b>roxa</b> quando você altera algum subitem.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="toggle-right" class="size-4 text-[#FF007E]"></i> 4. Avaliação por toggles</h3>
+        <p class="mt-1">Cada item <b>já vem na posição avaliada pela Guardian</b>. O revisor só mexe quando <b>discorda</b> — e a linha fica <b>destacada em roxo</b> (divergência). O <b>✓/✗ da Guardian</b> continua ao lado, para comparar IA × decisão humana.</p>
+        <p class="my-3 rounded-md bg-blue-50 border border-blue-200 px-2.5 py-2"><b>⏱️ Horários clicáveis:</b> à esquerda de cada item ficam os instantes em que a diretriz aparece — <b>clique no horário e o vídeo pula direto para aquele momento</b>.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="list-checks" class="size-4 text-violet-600"></i> 5. Organização e ordem</h3>
-        <p class="mt-1">Fim dos acordeões soltos do layout antigo. Ordem fixa, de cima para baixo: <b>Diretrizes de conteúdo</b> (lista direta) → <b>Qualidade de áudio</b> → <b>Segurança de marca</b> — estas duas como acordeões com subitens e toggle consolidado (ver item 4).</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="list-checks" class="size-4 text-[#FF007E]"></i> 5. Análise em acordeões</h3>
+        <p class="mt-1">Ordem fixa: <b>Diretrizes de conteúdo</b> (aberta) → <b>Qualidade de áudio</b> → <b>Segurança de marca</b> (recolhidas), cada uma com subitens. O <b>toggle do topo é um reflexo</b>: desliga se qualquer subitem desligar, e fica <b>roxo</b> quando você altera um subitem.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="gavel" class="size-4 text-violet-600"></i> 6. Botão de decisão mais inteligente</h3>
-        <p class="mt-1">Fica junto da Análise, com <b>campo de feedback ao creator acima</b>. Alguma linha recusada → <b>“Recusar”</b>; todas aprovadas → <b>“Aprovar”</b> (removemos o antigo “X”). Uma <b>dica ao vivo</b> mostra quantas diretrizes ainda estão recusadas, e <b>“Recusar” abre um pop-up</b> com as diretrizes recusadas + feedback ao creator.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="gavel" class="size-4 text-[#FF007E]"></i> 6. Decisão + feedback automático</h3>
+        <p class="mt-1">O botão acompanha a avaliação: tudo ok → <b>Aprovar</b> (azul); algum recusado → <b>Reprovar</b> (vermelho), que abre um <b>pop-up</b> com as diretrizes recusadas + feedback. Em <b>Pendentes</b>, um botão <b>“(⋮) Reprovar por outro motivo”</b> aparece só quando há recusa.</p>
+        <p class="my-3 rounded-md bg-blue-50 border border-blue-200 px-2.5 py-2"><b>✨ Feedback automático (Pendentes):</b> o campo de feedback ao creator <b>se autopreenche</b> a partir das diretrizes reprovadas e <b>se limpa quando tudo é aprovado</b> — e você ainda pode editar à mão.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="history" class="size-4 text-violet-600"></i> 7. Linha do tempo (histórico completo)</h3>
-        <p class="mt-1">Nova coluna à direita com <b>todo o histórico do conteúdo numa única timeline</b> (envio → análise → feedback → contestação → reenvio…), separada por <b>submissão</b> (v1, v2…). As <b>mensagens do creator têm visual próprio</b> (balão roxo), diferente do feedback da operação (post-it) e dos eventos do sistema. A coluna é <b>retrátil</b> (começa recolhida) — ao recolher, o vídeo fica compacto e a Análise ganha o espaço extra.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="layers" class="size-4 text-[#FF007E]"></i> 7. Comportamento por aba</h3>
+        <p class="mt-1"><b>Reprovados:</b> “altere avaliação para reverter” → vira <b>“Contestar”</b> (se ainda há recusa) ou <b>“Reverter e Aprovar”</b> (se tudo ficou ok). <b>Contestações:</b> a <b>contestação do creator aparece acima do botão</b>, com copy <b>“Aprovar/Reprovar Contestação”</b>.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="layers" class="size-4 text-violet-600"></i> 8. Comportamento por aba de status</h3>
-        <p class="mt-1"><b>Reprovados:</b> botão “Reprovado — altere avaliação para reverter”; ao reverter alguma avaliação vira <b>“Contestar”</b>, e se tudo ficar aprovado vira <b>“Reverter e Aprovar”</b>. <b>Contestações:</b> a <b>contestação do creator aparece acima do botão</b>. O <b>creator exibido muda conforme a aba</b>, para o contexto ficar claro.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="history" class="size-4 text-[#FF007E]"></i> 8. Linha do tempo</h3>
+        <p class="mt-1"><b>Histórico completo numa única timeline</b> (envio → análise → feedback → contestação → reenvio…), separada por <b>submissão</b> (v1, v2…). <b>Mensagens do creator</b> têm visual próprio (balão), o feedback da operação vira <b>post-it</b> e há eventos do sistema. A coluna é <b>retrátil</b> (começa recolhida); ao abri-la, o <b>vídeo mantém a largura</b> e a Análise cede o espaço.</p>
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="sliders-horizontal" class="size-4 text-violet-600"></i> 9. Outros ajustes</h3>
-        <p class="mt-1">Novo botão <b>“Draw in”</b> recolhe a coluna de Momentos; containers de <b>Análise/Briefing maiores</b>; a <b>busca dos Momentos</b> segue no topo, junto do botão de recolher.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="file-text" class="size-4 text-[#FF007E]"></i> 9. Briefing por momento</h3>
+        <p class="mt-1">A aba <b>Briefing</b> mostra o briefing real (anonimizado) de <b>cada onda</b>: First impression, Prova de Conceito e Drama com o Frizz — com o “deve / não deve fazer”.</p>
       </div>
 
-      <div class="rounded-lg bg-violet-50 border border-violet-200 p-3">
-        <h3 class="font-semibold text-violet-800 flex items-center gap-2"><i data-lucide="mouse-pointer-click" class="size-4"></i> Como testar</h3>
+      <div>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="palette" class="size-4 text-[#FF007E]"></i> 10. Momentos, cores e dados</h3>
+        <p class="mt-1"><b>Momentos agrupados</b> com as plataformas (IG/TikTok) empilhadas; <b>“Draw in”</b> recolhe a coluna; busca no topo. Paleta alinhada à <b>marca (rosa #FF007E)</b> nos acentos — azul = aprovado, vermelho = recusa, roxo = divergência/contestação. Conteúdo baseado na <b>maior campanha real (~13 mil conteúdos)</b>, anonimizada.</p>
+      </div>
+
+      <div class="rounded-lg bg-[#FF007E]/5 border border-[#FF007E]/30 p-3">
+        <h3 class="font-semibold text-[#FF007E] flex items-center gap-2"><i data-lucide="mouse-pointer-click" class="size-4"></i> Como testar</h3>
         <ul class="mt-1 list-disc pl-5 space-y-0.5 text-slate-700">
-          <li>Vire os toggles e veja o destaque roxo + o botão alternando Aprovar/Recusar.</li>
-          <li>Clique nos timestamps para “pular” no vídeo.</li>
+          <li>Vire os toggles e veja o destaque roxo + o botão alternando <b>Aprovar/Reprovar</b> e o feedback automático.</li>
+          <li>Clique nos <b>horários</b> para “pular” no vídeo, e na <b>foto</b> para abrir em resolução original.</li>
           <li>Troque entre as abas (Pendentes / Reprovados / Aprovados / Contestações).</li>
-          <li>Teste o “Draw in”, o menu lateral (passe o mouse) e o pop-up de recusa.</li>
+          <li>Recolha/abra <b>Momentos</b> e <b>Linha do tempo</b>, passe o mouse no menu lateral e teste o pop-up de reprovação.</li>
         </ul>
       </div>
 
