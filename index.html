@@ -364,7 +364,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="gavel" class="size-4 text-[#FF007E]"></i> 6. Decisão + feedback automático</h3>
-        <p class="mt-1">O botão acompanha a avaliação: tudo ok → <b>Aprovar</b> (azul); algum recusado → <b>Reprovar</b> (vermelho), que abre um <b>pop-up</b> com as diretrizes recusadas + feedback. Em <b>Pendentes</b>, um botão <b>“(⋮) Reprovar por outro motivo”</b> aparece só quando há recusa.</p>
+        <p class="mt-1">O botão acompanha a avaliação: tudo ok → <b>Aprovar</b> (azul); algum recusado → <b>Reprovar</b> (vermelho), que abre um <b>pop-up</b> com as diretrizes recusadas + feedback. Em <b>Pendentes</b>, quando a <b>Guardian aprovou</b> o conteúdo, um botão <b>“(⋮) Reprovar por outro motivo”</b> permite reprovar por uma <b>anomalia fora das diretrizes</b>.</p>
         <p class="my-3 rounded-md bg-blue-50 border border-blue-200 px-2.5 py-2"><b>✨ Feedback automático (Pendentes):</b> o campo de feedback ao creator <b>se autopreenche</b> a partir das diretrizes reprovadas e <b>se limpa quando tudo é aprovado</b> — e você ainda pode editar à mão.</p>
       </div>
 
@@ -668,8 +668,10 @@ function refreshDecision(){
     return;
   }
   const neg = anyFail();
-  // "Reprovar por outro motivo" (kebab) only on Pendentes AND while the verdict is negative
-  document.getElementById("otherReasonWrap").hidden = !(currentStatus === "pendentes" && neg);
+  // "Reprovar por outro motivo" (kebab) só em Pendentes E quando a Guardian APROVOU o conteúdo.
+  // Se a Guardian reprovou algo, a analista reprova pelas diretrizes e descreve a anomalia no feedback.
+  const guardianApproved = ![...document.querySelectorAll(".line")].some(l => l.dataset.guardian === "fail");
+  document.getElementById("otherReasonWrap").hidden = !(currentStatus === "pendentes" && guardianApproved);
   document.getElementById("otherReasonMenu").hidden = true;
   if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-blue-700 text-white", true); return; }
   if(neg){
