@@ -155,7 +155,7 @@
 
         <!-- ANALYSIS -->
         <div data-panel="analysis" class="flex-1 overflow-y-auto p-3 space-y-4">
-          <div class="flex items-center gap-1 text-xs text-amber-600 mb-1"><i data-lucide="shield-alert" class="size-4"></i> Guardian indicou revisão</div>
+          <div id="guardianHeader" class="flex items-center gap-1 text-xs text-blue-600 mb-1"><i data-lucide="shield-check" class="size-4"></i> Pré-aprovado pela Guardian</div>
           <p class="text-[11px] text-slate-400 -mt-1">Os toggles vêm na posição avaliada pela Guardian. Vire um toggle para indicar que a Guardian errou — a linha ficará roxa.</p>
 
           <div data-accordion-mount="guidelines"></div>
@@ -447,7 +447,7 @@
 // diretrizes reais da maior campanha (anonimizadas: Hidrata+ / Sérum Reparador)
 const guidelines = [
   { label:"Mostrar a transformação de textura (creme → fluído) na 1ª cena", guardian:"ok",   times:["0:01","0:04"] },
-  { label:"Produto em primeiro plano nos 3 primeiros segundos",             guardian:"fail", times:["0:03"] },
+  { label:"Produto em primeiro plano nos 3 primeiros segundos",             guardian:"ok",   times:["0:03"] },
   { label:"Mencionar a frase/claim exato do produto e o “efeito melt”",     guardian:"ok",   times:["0:08"] },
   { label:"Pronunciar “Sérum” como “SÉ-rum”",                               guardian:"ok",   times:["0:09"] },
   { label:"Relato em primeira pessoa sobre o uso do produto",               guardian:"ok",   times:["0:15"] },
@@ -464,32 +464,27 @@ const brandChildren = [
   { label:"Discurso de ódio",        guardian:"ok",   times:["0:08"] },
   { label:"Assédio",                 guardian:"ok",   times:["0:12"] },
   { label:"Conteúdo ilegal / falso", guardian:"ok",   times:["0:16"] },
-  { label:"Conteúdo sensível",       guardian:"fail", times:["0:14"] },
+  { label:"Conteúdo sensível",       guardian:"ok",   times:["0:14"] },
 ];
 
 /* ---------- creators per status tab ---------- */
 const CREATORS = {
   pendentes: {
     name:"Bianca Andrade", id:"#88213", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg/330px-Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg",
-    ig:"@bianca", igUrl:"https://instagram.com/bianca", tt:"@biancaandrade", ttUrl:"https://www.tiktok.com/@biancaandrade", yt:"Boca Rosa", ytUrl:"https://www.youtube.com/@BocaRosa", received:"Recebido em 03/06/2026 às 09:04 · v2",
+    ig:"@bianca", igUrl:"https://instagram.com/bianca", tt:"@biancaandrade", ttUrl:"https://www.tiktok.com/@biancaandrade", yt:"Boca Rosa", ytUrl:"https://www.youtube.com/@BocaRosa", received:"Recebido em 03/06/2026 às 09:04 · v1",
+    guardianFails:[], gTone:"ok",
     contestation:'"O produto aparece em primeiro plano já nos 2 primeiros segundos, podem revisar por favor?"',
     timeline:[
       { type:"round", text:"Submissão 1" },
-      { type:"submit", title:"Conteúdo enviado (v1)", when:"01/06 18:20" },
-      { type:"system", icon:"bot", color:"bg-violet-500", title:"Análise Guardian", sub:"Indicou revisão", when:"01/06 18:21" },
-      { type:"reviewer", title:"Feedback enviado", sub:"Produto não aparece em primeiro plano nos 3 primeiros segundos.", when:"01/06 19:40" },
-      { type:"creator", title:"Contestação do creator", text:"Acho que o produto aparece já no segundo 3, podem revisar?", when:"02/06 08:15" },
-      { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo recusado", sub:"Novo vídeo solicitado", when:"02/06 11:00" },
-      { type:"round", text:"Submissão 2" },
-      { type:"submit", title:"Novo conteúdo enviado (v2)", when:"03/06 09:04" },
-      { type:"system", icon:"bot", color:"bg-violet-500", title:"Análise Guardian", sub:"Indicou revisão", when:"03/06 09:05" },
-      { type:"creator", title:"Mensagem do creator", text:"Regravei mostrando o produto em primeiro plano logo no início 🙌", when:"03/06 09:06" },
+      { type:"submit", title:"Conteúdo enviado (v1)", when:"03/06 09:04" },
+      { type:"system", icon:"bot", color:"bg-blue-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"03/06 09:05" },
       { type:"system", icon:"eye", color:"bg-slate-500", title:"Em revisão humana", sub:"James Goulart", when:"agora" },
     ],
   },
   reprovados: {
     name:"Virginia Fonseca", id:"#90455", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Virginia_Fonseca_na_CPI_das_BETS_02_%28cropped%29.jpg/330px-Virginia_Fonseca_na_CPI_das_BETS_02_%28cropped%29.jpg",
     ig:"@virginia", igUrl:"https://instagram.com/virginia", tt:"@virginiafonseca", ttUrl:"https://www.tiktok.com/@virginiafonseca", yt:"Virginia Fonseca", ytUrl:"https://www.youtube.com/channel/UCsaB2VrLZrtGbum6Eo0ClbA", received:"Recebido em 31/05/2026 às 14:10 · v1",
+    guardianFails:["Áudio baixo ou ausente"], gTone:"bad",
     contestation:'"Acho que o áudio está bom, gravei com microfone de lapela."',
     timeline:[
       { type:"round", text:"Submissão 1" },
@@ -502,6 +497,7 @@ const CREATORS = {
   aprovados: {
     name:"Camila Coelho", id:"#77310", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Camila_Coelho_2015.jpg/330px-Camila_Coelho_2015.jpg",
     ig:"@camilacoelho", igUrl:"https://instagram.com/camilacoelho", tt:"@camilacoelho", ttUrl:"https://www.tiktok.com/@camilacoelho", yt:"Camila Coelho", ytUrl:"https://www.youtube.com/@CamilaCoelho", received:"Recebido em 29/05/2026 às 10:02 · v1",
+    guardianFails:[], gTone:"ok",
     contestation:"",
     timeline:[
       { type:"round", text:"Submissão 1" },
@@ -513,14 +509,15 @@ const CREATORS = {
   contestacoes: {
     name:"Niina Secrets", id:"#91022", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Niina_Secrets%2C_Junho_de_2017%2C_02.jpg/330px-Niina_Secrets%2C_Junho_de_2017%2C_02.jpg",
     ig:"@niinasecrets", igUrl:"https://instagram.com/niinasecrets", tt:"@niinasecrets", ttUrl:"https://www.tiktok.com/@niinasecrets", yt:"NiinaSecrets", ytUrl:"https://www.youtube.com/channel/UCAkZ7bimIU9m7wT6Th0FcEw", received:"Recebido em 30/05/2026 às 19:40 · v1",
-    contestation:'"Tem sim o call-to-action no último segundo do vídeo, deem play até o fim 🙏"',
+    guardianFails:["Produto em primeiro plano nos 3 primeiros segundos"], gTone:"warn",
+    contestation:'"O produto aparece em primeiro plano já nos 2 primeiros segundos, podem revisar por favor?"',
     timeline:[
       { type:"round", text:"Submissão 1" },
       { type:"submit", title:"Conteúdo enviado (v1)", when:"30/05 19:40" },
       { type:"system", icon:"bot", color:"bg-violet-500", title:"Análise Guardian", sub:"Indicou revisão", when:"30/05 19:41" },
-      { type:"reviewer", title:"Feedback enviado", sub:"Faltou o call-to-action no final do vídeo.", when:"30/05 21:00" },
+      { type:"reviewer", title:"Feedback enviado", sub:"Produto não aparece em primeiro plano nos 3 primeiros segundos.", when:"30/05 21:00" },
       { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo recusado", sub:"James Goulart", when:"31/05 09:15" },
-      { type:"creator", title:"Contestação do creator", text:"Tem CTA sim, no último segundo do vídeo! Deem play até o fim 🙏", when:"31/05 10:30" },
+      { type:"creator", title:"Contestação do creator", text:"O produto aparece sim, já no segundo 2! Deem play do início 🙏", when:"31/05 10:30" },
       { type:"system", icon:"clock", color:"bg-amber-500", title:"Aguardando decisão", sub:"Contestação em análise", when:"agora" },
     ],
   },
@@ -587,6 +584,11 @@ function updateGroup(groupId){
   const edited = kids.some(l => l.dataset.state !== l.dataset.guardian);
   if(edited){ head.style.background = "#ddd6fe"; head.style.boxShadow = "inset 4px 0 0 0 #6d28d9"; }
   else { head.style.background = ""; head.style.boxShadow = ""; }
+  // consolidated Guardian icon (derived from children's Guardian verdict)
+  const gIcon = head.querySelector('[title="Avaliação consolidada do Guardian"]');
+  if(gIcon) gIcon.innerHTML = kids.every(l => l.dataset.guardian === "ok")
+    ? '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>'
+    : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
 }
 buildAccordion("guidelines", "list-checks", "Diretrizes de conteúdo", guidelines, true);
 buildAccordion("audio", "audio-lines", "Qualidade de áudio", audioChildren);
@@ -661,6 +663,11 @@ function refreshDecision(){
     ? `${fc} ${fc>1?"itens recusados":"item recusado"} — aprove ou recuse o conteúdo`
     : "";
   syncAutoFeedback();
+  // "Reprovar por outro motivo" (kebab) só em Pendentes E quando a Guardian APROVOU o conteúdo.
+  // Se a Guardian reprovou algo, a analista reprova pelas diretrizes e descreve a anomalia no feedback.
+  const guardianApproved = ![...document.querySelectorAll(".line")].some(l => l.dataset.guardian === "fail");
+  document.getElementById("otherReasonWrap").hidden = !(currentStatus === "pendentes" && guardianApproved);
+  document.getElementById("otherReasonMenu").hidden = true;
   if(currentStatus === "reprovados"){
     if(!anyEdited()){ decision = "none"; setBtn("Reprovado — altere avaliação para reverter", "bg-slate-200 text-slate-500", true); }
     else if(!anyFail()){ decision = "reverter"; setBtn("Reverter e Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
@@ -668,11 +675,6 @@ function refreshDecision(){
     return;
   }
   const neg = anyFail();
-  // "Reprovar por outro motivo" (kebab) só em Pendentes E quando a Guardian APROVOU o conteúdo.
-  // Se a Guardian reprovou algo, a analista reprova pelas diretrizes e descreve a anomalia no feedback.
-  const guardianApproved = ![...document.querySelectorAll(".line")].some(l => l.dataset.guardian === "fail");
-  document.getElementById("otherReasonWrap").hidden = !(currentStatus === "pendentes" && guardianApproved);
-  document.getElementById("otherReasonMenu").hidden = true;
   if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-blue-700 text-white", true); return; }
   if(neg){
     decision = "reject";
@@ -719,6 +721,25 @@ function resetLines(){ // back to Guardian's initial position (clears purple)
   document.querySelectorAll(".line").forEach(l => { l.dataset.state = l.dataset.guardian; paintToggle(l); });
   updateGroup("guidelines"); updateGroup("audio"); updateGroup("brand");
 }
+// the Guardian verdict depends on the content (tab): set which lines Guardian flagged + the header
+function setGuardianForTab(status){
+  const fails = CREATORS[status].guardianFails || [];
+  document.querySelectorAll(".line").forEach(l => {
+    const fail = fails.includes(l.dataset.label);
+    l.dataset.guardian = fail ? "fail" : "ok";
+    const gi = l.querySelector('[title="Avaliação do Guardian"]');
+    if(gi) gi.innerHTML = fail
+      ? '<i data-lucide="circle-x" class="size-4 text-red-600"></i>'
+      : '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>';
+  });
+  const tone = CREATORS[status].gTone || "warn";
+  const cfg = { ok:["text-blue-600","shield-check","Pré-aprovado pela Guardian"],
+                warn:["text-amber-600","shield-alert","Guardian indicou revisão"],
+                bad:["text-red-600","shield-x","Guardian indicou reprovação"] }[tone];
+  const gh = document.getElementById("guardianHeader");
+  gh.className = `flex items-center gap-1 text-xs ${cfg[0]} mb-1`;
+  gh.innerHTML = `<i data-lucide="${cfg[1]}" class="size-4"></i> ${cfg[2]}`;
+}
 function applyCreator(status){
   const c = CREATORS[status];
   document.getElementById("cPhoto").src = c.photo;
@@ -745,12 +766,14 @@ document.querySelectorAll(".status-tab").forEach(tab => tab.addEventListener("cl
   statusPill.textContent = label; statusPill.className = `text-[11px] rounded-full px-2 py-0.5 font-medium ${cls}`;
   contestationBox.hidden = currentStatus !== "contestacoes";
   applyCreator(currentStatus);
+  setGuardianForTab(currentStatus); // veredito da Guardian por conteúdo/aba
   resetLines();
   // limpa o feedback ao trocar de aba (Pendentes regenera o automático no refreshDecision)
   document.getElementById("feedbackSlot").value = ""; lastAutoFeedback = "";
   // reset video frame back to poster
   frame.hidden = true; poster.hidden = false; frameTag.hidden = true;
   refreshDecision();
+  lucide.createIcons();
 }));
 
 /* ---------- reject modal ---------- */
