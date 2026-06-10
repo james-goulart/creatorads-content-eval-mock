@@ -99,7 +99,7 @@
         <div class="p-2 border-b">
           <div class="relative">
             <i data-lucide="search" class="size-4 absolute left-2 top-2 text-slate-400"></i>
-            <input class="w-full bg-slate-100 rounded-md pl-7 pr-2 py-1.5 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-200" placeholder="Buscar conteúdo…">
+            <input class="w-full bg-slate-100 rounded-md pl-7 pr-2 py-1.5 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-200" placeholder="Buscar conteúdo…" title="Buscar por @, nome ou ID">
           </div>
         </div>
         <div class="flex-1 overflow-y-auto p-2 space-y-1">
@@ -570,16 +570,24 @@ function toggleHTML(state){ // state: ok | fail
     <span class="knob absolute top-0.5 size-5 rounded-full bg-white shadow transition-all ${on?'left-[22px]':'left-0.5'}"></span>
   </button>`;
 }
-function lineHTML(item, id){
-  const gIcon = item.guardian === "ok"
+function guardianIconHTML(state){
+  return state === "ok"
     ? '<i data-lucide="shield-check" class="size-4 text-blue-600"></i>'
     : '<i data-lucide="shield-x" class="size-4 text-red-600"></i>';
+}
+function humanIconHTML(state){
+  return state === "ok"
+    ? '<i data-lucide="user-check" class="size-4 text-blue-600"></i>'
+    : '<i data-lucide="user-x" class="size-4 text-red-600"></i>';
+}
+function lineHTML(item, id){
   return `
   <div class="line flex items-start gap-2 rounded-md border px-2 py-1.5 text-sm" data-id="${id}" data-label="${item.label}" data-guardian="${item.guardian}" data-state="${item.guardian}">
     <div class="flex flex-col gap-1 w-12 shrink-0">${timeChips(item.times)}</div>
     <span class="flex-1 leading-tight pt-0.5">${item.label}</span>
     <div class="flex items-center gap-2 shrink-0 pt-0.5">
-      <span title="Avaliação do Guardian">${gIcon}</span>
+      <span title="Avaliação do Guardian">${guardianIconHTML(item.guardian)}</span>
+      <span class="line-human" title="Sua avaliação">${humanIconHTML(item.guardian)}</span>
       ${toggleHTML(item.guardian)}
     </div>
   </div>`;
@@ -662,6 +670,7 @@ document.querySelectorAll(".line").forEach(line => {
     paintToggle(line);
     const grp = line.closest("[data-group]"); if(grp) updateGroup(grp.getAttribute("data-group"));
     refreshDecision();
+    lucide.createIcons(); // re-renderiza o ícone humano trocado
   });
 });
 /* accordion expand / collapse */
@@ -681,6 +690,9 @@ function paintToggle(line){
   const tg = line.querySelector("[data-toggle]"), knob = tg.querySelector(".knob");
   tg.classList.toggle("bg-blue-500", on); tg.classList.toggle("bg-red-500", !on);
   knob.classList.toggle("left-[22px]", on); knob.classList.toggle("left-0.5", !on);
+  // ícone da avaliação humana acompanha o toggle
+  const human = line.querySelector(".line-human");
+  if(human) human.innerHTML = humanIconHTML(line.dataset.state);
 }
 
 /* ---------- timestamp seek (mock: swap a frame image) ---------- */
