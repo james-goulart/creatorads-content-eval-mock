@@ -252,10 +252,8 @@
       <section id="videoCol" data-slot="video" class="relative flex-1 min-w-[420px] flex rounded-lg border bg-white overflow-hidden">
         <div class="col-resize absolute top-0 right-0 h-full w-1.5 z-20 cursor-col-resize hover:bg-[#FF007E]/40" data-resize="video" title="Arraste para redimensionar (duplo-clique para preencher)"></div>
 
-        <!-- side header: creator info + navegador -->
-        <aside class="w-48 shrink-0 border-r flex flex-col gap-3 p-3 overflow-y-auto">
-          <span class="col-grip self-start cursor-grab active:cursor-grabbing text-slate-300 hover:text-slate-500" draggable="true" data-grip="video" title="Arraste para reordenar a coluna"><i data-lucide="grip-vertical" class="size-4"></i></span>
-
+        <!-- side header: creator info + navegador (à direita do vídeo) -->
+        <aside class="order-last w-48 shrink-0 border-l flex flex-col gap-3 p-3 overflow-y-auto">
           <a id="cPhotoLink" href="https://upload.wikimedia.org/wikipedia/commons/5/51/Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg" title="Ampliar foto (verificação)" class="relative group block cursor-zoom-in">
             <img id="cPhoto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg/330px-Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg" class="w-full aspect-square rounded-xl object-cover ring-2 ring-slate-200" alt="Foto do creator">
             <span class="absolute bottom-1.5 right-1.5 grid place-items-center bg-black/60 text-white rounded p-1 opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="zoom-in" class="size-4"></i></span>
@@ -299,9 +297,10 @@
           </div>
         </aside>
 
-        <!-- video area (full height) -->
-        <div class="flex-1 min-w-0 grid place-items-center bg-slate-50 p-4">
-          <div class="relative h-full max-h-full aspect-[9/16] rounded-xl bg-slate-900 shadow-lg overflow-hidden grid place-items-center">
+        <!-- video area (à esquerda, altura total) -->
+        <div class="order-first relative flex-1 min-w-0 grid place-items-center bg-slate-50 p-4">
+          <span class="col-grip absolute top-2 left-2 z-20 grid place-items-center size-7 rounded-md bg-white/85 shadow cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600" draggable="true" data-grip="video" title="Arraste para reordenar a coluna"><i data-lucide="grip-vertical" class="size-4"></i></span>
+          <div class="relative h-full max-h-full max-w-full aspect-[9/16] rounded-xl bg-slate-900 shadow-lg overflow-hidden grid place-items-center">
             <!-- default poster -->
             <div id="videoPoster" class="text-center text-slate-400">
               <i data-lucide="play-circle" class="size-14 mx-auto mb-2"></i>
