@@ -381,7 +381,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="list-checks" class="size-4 text-[#FF007E]"></i> 5. Análise em acordeões</h3>
-        <p class="mt-1">Ordem fixa: <b>Diretrizes de conteúdo</b> (aberta) → <b>Qualidade de áudio</b> → <b>Segurança de marca</b> (recolhidas), cada uma com subitens. O <b>toggle do topo é um reflexo</b>: desliga se qualquer subitem desligar, e fica <b>roxo</b> quando você altera um subitem.</p>
+        <p class="mt-1">Ordem fixa: <b>Diretrizes de conteúdo</b> (aberta) → <b>Qualidade de áudio</b> → <b>Segurança de marca</b> (recolhidas), cada uma com subitens. O <b>cabeçalho fica destacado</b> em <b>azul</b> (todos os subitens ok) ou <b>vermelho</b> (algum reprovado).</p>
       </div>
 
       <div>
@@ -604,7 +604,7 @@ function buildAccordion(groupId, iconName, label, children, open=false){
         <i data-lucide="chevron-down" class="size-4 text-slate-400 acc-chevron transition-transform"${open?'':' style="transform:rotate(-90deg)"'}></i>
         <i data-lucide="${iconName}" class="size-4 text-slate-500"></i>
         <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">${label}</span>
-        <span class="ml-auto flex items-center gap-2"><span title="Avaliação consolidada do Guardian">${gIcon}</span>${parentToggleVisual(gOk)}</span>
+        <span class="ml-auto" title="Avaliação consolidada do Guardian">${gIcon}</span>
       </div>
       <div class="acc-body border-t bg-slate-50/60 px-2 py-2 space-y-1.5" data-group="${groupId}"${open?'':' hidden'}></div>
     </div>`;
@@ -613,13 +613,11 @@ function buildAccordion(groupId, iconName, label, children, open=false){
 function updateGroup(groupId){
   const acc = document.querySelector(`[data-accordion="${groupId}"]`); if(!acc) return;
   const kids = [...acc.querySelectorAll('.line')];
-  // derived parent toggle: off if any child is off
-  paintToggleEl(acc.querySelector('[data-parent-toggle]'), kids.every(l => l.dataset.state === 'ok'));
-  // parent row turns purple if any child diverges from Guardian
   const head = acc.querySelector('.acc-head');
-  const edited = kids.some(l => l.dataset.state !== l.dataset.guardian);
-  if(edited){ head.style.background = "#ddd6fe"; head.style.boxShadow = "inset 4px 0 0 0 #6d28d9"; }
-  else { head.style.background = ""; head.style.boxShadow = ""; }
+  // cabeçalho destacado: azul se todos os subitens estão ok, vermelho se algum reprovado
+  const allOk = kids.every(l => l.dataset.state === 'ok');
+  if(allOk){ head.style.background = "#eff6ff"; head.style.boxShadow = "inset 3px 0 0 0 #3b82f6"; }
+  else { head.style.background = "#fef2f2"; head.style.boxShadow = "inset 3px 0 0 0 #ef4444"; }
   // consolidated Guardian icon (derived from children's Guardian verdict)
   const gIcon = head.querySelector('[title="Avaliação consolidada do Guardian"]');
   if(gIcon) gIcon.innerHTML = kids.every(l => l.dataset.guardian === "ok")
