@@ -160,7 +160,7 @@
         <!-- ANALYSIS -->
         <div data-panel="analysis" class="flex-1 overflow-y-auto p-3 space-y-4">
           <div id="guardianHeader" class="flex items-center gap-1 text-xs text-blue-600 mb-1"><i data-lucide="shield-check" class="size-4"></i> Pré-aprovado pela Guardian</div>
-          <p class="text-[11px] text-slate-400 -mt-1">Os toggles vêm na posição avaliada pela Guardian. Vire um toggle para indicar que a Guardian errou — a linha ficará roxa.</p>
+          <p class="text-[11px] text-slate-400 -mt-1">Cada linha vem na posição avaliada pela Guardian. Clique numa linha para indicar que a Guardian errou — a linha fica roxa.</p>
 
           <div data-accordion-mount="guidelines"></div>
           <div data-accordion-mount="audio"></div>
@@ -374,8 +374,8 @@
       </div>
 
       <div>
-        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="toggle-right" class="size-4 text-[#FF007E]"></i> 4. Avaliação por toggles</h3>
-        <p class="mt-1">Cada item <b>já vem na posição avaliada pela Guardian</b>. O revisor só mexe quando <b>discorda</b> — e a linha fica <b>destacada em roxo</b> (divergência). O <b>✓/✗ da Guardian</b> continua ao lado, para comparar IA × decisão humana.</p>
+        <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="mouse-pointer-click" class="size-4 text-[#FF007E]"></i> 4. Avaliação por clique</h3>
+        <p class="mt-1">Cada item <b>já vem na posição avaliada pela Guardian</b>. <b>Clique na linha</b> (em qualquer lugar, menos no horário) para discordar — a linha fica <b>destacada em roxo</b>. Cada linha mostra o <b>escudo da Guardian</b> (🛡️) e o <b>ícone da sua avaliação</b> (👤 ✓/✕) lado a lado.</p>
         <p class="my-3 rounded-md bg-blue-50 border border-blue-200 px-2.5 py-2"><b>⏱️ Horários clicáveis:</b> à esquerda de cada item ficam os instantes em que a diretriz aparece — <b>clique no horário e o vídeo pula direto para aquele momento</b>.</p>
       </div>
 
@@ -413,7 +413,7 @@
       <div class="rounded-lg bg-[#FF007E]/5 border border-[#FF007E]/30 p-3">
         <h3 class="font-semibold text-[#FF007E] flex items-center gap-2"><i data-lucide="mouse-pointer-click" class="size-4"></i> Como testar</h3>
         <ul class="mt-1 list-disc pl-5 space-y-0.5 text-slate-700">
-          <li>Vire os toggles e veja o destaque roxo + o botão alternando <b>Aprovar/Reprovar</b> e o feedback automático.</li>
+          <li>Clique nas linhas para discordar da Guardian (fica roxo) e veja o botão alternar <b>Aprovar/Reprovar</b> + o feedback automático.</li>
           <li>Clique nos <b>horários</b> para “pular” no vídeo, e na <b>foto</b> para abrir em resolução original.</li>
           <li>Troque entre as abas (Pendentes / Reprovados / Aprovados / Contestações).</li>
           <li>Recolha/abra <b>Momentos</b> e <b>Linha do tempo</b>, passe o mouse no menu lateral e teste o pop-up de reprovação.</li>
@@ -582,13 +582,12 @@ function humanIconHTML(state){
 }
 function lineHTML(item, id){
   return `
-  <div class="line flex items-start gap-2 rounded-md border px-2 py-1.5 text-sm" data-id="${id}" data-label="${item.label}" data-guardian="${item.guardian}" data-state="${item.guardian}">
+  <div class="line flex items-start gap-2 rounded-md border px-2 py-1.5 text-sm cursor-pointer select-none hover:bg-slate-50" data-id="${id}" data-label="${item.label}" data-guardian="${item.guardian}" data-state="${item.guardian}" title="Clique para alternar a sua avaliação">
     <div class="flex flex-col gap-1 w-12 shrink-0">${timeChips(item.times)}</div>
     <span class="flex-1 leading-tight pt-0.5">${item.label}</span>
-    <div class="flex items-center gap-2 shrink-0 pt-0.5">
+    <div class="flex items-center gap-3 shrink-0 pt-0.5">
       <span title="Avaliação do Guardian">${guardianIconHTML(item.guardian)}</span>
       <span class="line-human" title="Sua avaliação">${humanIconHTML(item.guardian)}</span>
-      ${toggleHTML(item.guardian)}
     </div>
   </div>`;
 }
@@ -612,7 +611,10 @@ function buildAccordion(groupId, iconName, label, children, open=false){
         <i data-lucide="chevron-down" class="size-4 text-slate-400 acc-chevron transition-transform"${open?'':' style="transform:rotate(-90deg)"'}></i>
         <i data-lucide="${iconName}" class="size-4 text-slate-500"></i>
         <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">${label}</span>
-        <span class="ml-auto" title="Avaliação consolidada do Guardian">${gIcon}</span>
+        <span class="ml-auto flex items-center gap-3">
+          <span title="Avaliação consolidada do Guardian">${gIcon}</span>
+          <span class="head-human" title="Avaliação humana consolidada">${humanIconHTML(gOk?'ok':'fail')}</span>
+        </span>
       </div>
       <div class="acc-body border-t bg-slate-50/60 px-2 py-2 space-y-1.5" data-group="${groupId}"${open?'':' hidden'}></div>
     </div>`;
@@ -627,6 +629,9 @@ function updateGroup(groupId){
   const allOk = kids.every(l => l.dataset.state === 'ok');
   if(allOk){ head.style.background = "#eff6ff"; head.style.boxShadow = "inset 3px 0 0 0 #3b82f6"; }
   else { head.style.background = "#fef2f2"; head.style.boxShadow = "inset 3px 0 0 0 #ef4444"; }
+  // ícone humano consolidado (acompanha os cliques nas linhas)
+  const hh = head.querySelector('.head-human');
+  if(hh) hh.innerHTML = humanIconHTML(allOk ? 'ok' : 'fail');
 }
 buildAccordion("guidelines", "list-checks", "Diretrizes de conteúdo", guidelines, true);
 buildAccordion("audio", "audio-lines", "Qualidade de áudio", audioChildren);
@@ -664,9 +669,9 @@ document.getElementById("addInternalComment").addEventListener("click", () => {
 
 /* ---------- toggle interaction ---------- */
 document.querySelectorAll(".line").forEach(line => {
-  line.querySelector("[data-toggle]").addEventListener("click", () => {
-    const next = line.dataset.state === "ok" ? "fail" : "ok";
-    line.dataset.state = next;
+  line.addEventListener("click", e => {
+    if(e.target.closest(".time-chip")) return; // clicar no horário não altera a avaliação
+    line.dataset.state = line.dataset.state === "ok" ? "fail" : "ok";
     paintToggle(line);
     const grp = line.closest("[data-group]"); if(grp) updateGroup(grp.getAttribute("data-group"));
     refreshDecision();
@@ -687,10 +692,7 @@ function paintToggle(line){
   const edited = line.dataset.state !== line.dataset.guardian;
   if(edited){ line.style.background = "#ddd6fe"; line.style.borderColor = "#7c3aed"; line.style.boxShadow = "inset 4px 0 0 0 #6d28d9"; }
   else { line.style.background = ""; line.style.borderColor = ""; line.style.boxShadow = ""; }
-  const tg = line.querySelector("[data-toggle]"), knob = tg.querySelector(".knob");
-  tg.classList.toggle("bg-blue-500", on); tg.classList.toggle("bg-red-500", !on);
-  knob.classList.toggle("left-[22px]", on); knob.classList.toggle("left-0.5", !on);
-  // ícone da avaliação humana acompanha o toggle
+  // ícone da avaliação humana acompanha o clique
   const human = line.querySelector(".line-human");
   if(human) human.innerHTML = humanIconHTML(line.dataset.state);
 }
