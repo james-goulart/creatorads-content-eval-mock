@@ -249,10 +249,11 @@
       </section>
 
       <!-- ===== COLUMN 3 — VIDEO (centered) ===== -->
-      <section id="videoCol" data-slot="video" class="flex-1 min-w-[320px] flex flex-col rounded-lg border bg-white overflow-hidden">
+      <section id="videoCol" data-slot="video" class="relative flex-1 min-w-[320px] flex flex-col rounded-lg border bg-white overflow-hidden">
+        <div class="col-resize absolute top-0 right-0 h-full w-1.5 z-20 cursor-col-resize hover:bg-[#FF007E]/40" data-resize="video" title="Arraste para redimensionar (duplo-clique para preencher)"></div>
         <div class="flex items-center gap-3 px-3 py-3 border-b">
           <span class="col-grip shrink-0 self-stretch flex items-center cursor-grab active:cursor-grabbing text-slate-300 hover:text-slate-500" draggable="true" data-grip="video" title="Arraste para reordenar a coluna"><i data-lucide="grip-vertical" class="size-4"></i></span>
-          <a id="cPhotoLink" href="https://upload.wikimedia.org/wikipedia/commons/5/51/Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg" target="_blank" rel="noopener" title="Abrir foto em resolução original (verificação)" class="relative group shrink-0">
+          <a id="cPhotoLink" href="https://upload.wikimedia.org/wikipedia/commons/5/51/Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg" title="Ampliar foto (verificação)" class="relative group shrink-0 cursor-zoom-in">
             <img id="cPhoto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg/330px-Anyduarte-wsummit-rastro-2715_%2854487944998%29_%28Bianca_Andrade%29.jpg" class="size-20 rounded-xl object-cover ring-2 ring-slate-200 cursor-zoom-in" alt="Foto do creator">
             <span class="absolute bottom-1 right-1 grid place-items-center bg-black/60 text-white rounded p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="zoom-in" class="size-3"></i></span>
           </a>
@@ -364,7 +365,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="user-search" class="size-4 text-[#FF007E]"></i> 3. Identificação do creator (anti-fraude)</h3>
-        <p class="mt-1"><b>Foto bem maior e clicável</b> — abre em <b>resolução original</b> para checar foto × vídeo. Os <b>@ de Instagram, TikTok e YouTube são clicáveis</b> (abrem o perfil real) e há um atalho de <b>WhatsApp “chat →”</b>, além do <b>Creator ID</b>.</p>
+        <p class="mt-1"><b>Foto bem maior e clicável</b> — abre num <b>modal em tela cheia</b> (clique fora para fechar); dentro dele, a <b>lupa</b> abre a <b>resolução original</b> em nova aba (checagem foto × vídeo). Os <b>@ de Instagram, TikTok e YouTube são clicáveis</b> (abrem o perfil real) e há um atalho de <b>WhatsApp “chat →”</b>, além do <b>Creator ID</b>.</p>
       </div>
 
       <div>
@@ -456,6 +457,15 @@
       <button id="otherReasonCancel" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200">Cancelar</button>
       <button id="otherReasonConfirm" class="rounded-md px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700">Reprovar</button>
     </div>
+  </div>
+</div>
+
+<!-- ===================== FOTO DO CREATOR (full screen) ===================== -->
+<div id="photoModal" hidden class="fixed inset-0 z-[60] bg-black/80 grid place-items-center p-6">
+  <div class="relative max-w-[92vw] max-h-[92vh]">
+    <img id="photoModalImg" src="" alt="Foto do creator em tamanho grande" class="max-w-[92vw] max-h-[92vh] object-contain rounded-lg shadow-2xl">
+    <a id="photoModalZoom" href="#" target="_blank" rel="noopener" title="Abrir em resolução original (nova aba)" class="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/60 text-white hover:bg-black/80 px-3 py-1.5 text-sm font-medium"><i data-lucide="zoom-in" class="size-4"></i> resolução original</a>
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[11px] text-white/70">clique fora para fechar</div>
   </div>
 </div>
 
@@ -841,6 +851,19 @@ document.getElementById("otherReasonCancel").addEventListener("click", closeOthe
 otherReasonModal.addEventListener("click", e => { if(e.target === otherReasonModal) closeOther(); });
 document.getElementById("otherReasonConfirm").addEventListener("click", () => { closeOther(); setBtn("Reprovado ✕", "bg-red-700 text-white", true); });
 
+/* ---------- foto do creator: modal full screen + lupa (nova aba) ---------- */
+const photoModal = document.getElementById("photoModal");
+const cPhotoLink = document.getElementById("cPhotoLink");
+cPhotoLink.addEventListener("click", e => {
+  e.preventDefault();
+  const url = cPhotoLink.href; // resolução original (definida por applyCreator)
+  document.getElementById("photoModalImg").src = url;
+  document.getElementById("photoModalZoom").href = url;
+  photoModal.hidden = false; lucide.createIcons();
+});
+photoModal.addEventListener("click", e => { if(e.target === photoModal) photoModal.hidden = true; }); // clicar fora fecha
+document.addEventListener("keydown", e => { if(e.key === "Escape") photoModal.hidden = true; });
+
 /* ---------- "O que mudou?" modal ---------- */
 const changesModal = document.getElementById("changesModal");
 const openChanges = () => { changesModal.hidden = false; lucide.createIcons(); };
@@ -858,9 +881,9 @@ const analysisCol = document.getElementById("analysisCol"), videoCol = document.
 
 /* ======== persisted layout: column order, widths, collapse states ======== */
 const LS_KEY = "ccd_mock_layout";
-const DEFAULTS = { order:["moments","analysis","video","timeline"], widths:{moments:224,analysis:420,timeline:384}, timelineCollapsed:true, momentsCollapsed:false };
-const MINW = { moments:150, analysis:300, timeline:260 };
-const RESIZE_SIGN = { moments:1, analysis:1, timeline:-1 }; // timeline handle is on the left edge
+const DEFAULTS = { order:["moments","analysis","video","timeline"], widths:{moments:224,analysis:420,timeline:384,video:null}, timelineCollapsed:true, momentsCollapsed:false };
+const MINW = { moments:150, analysis:300, timeline:260, video:320 };
+const RESIZE_SIGN = { moments:1, analysis:1, timeline:-1, video:1 }; // timeline handle is on the left edge
 let config;
 try { config = Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem(LS_KEY) || "{}")); }
 catch(_){ config = Object.assign({}, DEFAULTS); }
@@ -868,8 +891,13 @@ config.widths = Object.assign({}, DEFAULTS.widths, config.widths);
 if(!Array.isArray(config.order) || config.order.length !== 4) config.order = DEFAULTS.order.slice();
 const saveConfig = () => { try { localStorage.setItem(LS_KEY, JSON.stringify(config)); } catch(_){} };
 
-const COL = { moments: momentsCol, analysis: analysisCol, timeline: timelineCol };
-function applyWidths(){ for(const k in COL){ COL[k].style.flex = `0 0 ${config.widths[k]}px`; COL[k].style.width = `${config.widths[k]}px`; } }
+const COL = { moments: momentsCol, analysis: analysisCol, timeline: timelineCol, video: videoCol };
+function applyWidths(){
+  ["moments","analysis","timeline"].forEach(k => { COL[k].style.flex = `0 0 ${config.widths[k]}px`; COL[k].style.width = `${config.widths[k]}px`; });
+  // vídeo: largura explícita se o usuário ajustou; senão preenche o espaço restante
+  if(config.widths.video){ videoCol.style.flex = `0 0 ${config.widths.video}px`; videoCol.style.width = `${config.widths.video}px`; }
+  else { videoCol.style.flex = "1 1 0"; videoCol.style.width = ""; }
+}
 function applyColOrder(){ document.querySelectorAll("[data-slot]").forEach(el => el.style.order = config.order.indexOf(el.dataset.slot)); }
 
 /* moments collapse */
@@ -915,10 +943,12 @@ document.querySelectorAll("[data-resize]").forEach(h => {
     resizing = h.dataset.resize; startX = e.clientX; startW = COL[resizing].getBoundingClientRect().width;
     document.body.style.userSelect = "none"; document.body.style.cursor = "col-resize"; e.preventDefault();
   });
+  // duplo-clique restaura a largura padrão (vídeo volta a preencher)
+  h.addEventListener("dblclick", () => { const k = h.dataset.resize; config.widths[k] = DEFAULTS.widths[k]; applyWidths(); saveConfig(); });
 });
 window.addEventListener("mousemove", e => {
   if(!resizing) return;
-  let w = Math.max(MINW[resizing], Math.min(startW + RESIZE_SIGN[resizing] * (e.clientX - startX), 640));
+  let w = Math.max(MINW[resizing], Math.min(startW + RESIZE_SIGN[resizing] * (e.clientX - startX), 900));
   config.widths[resizing] = w; COL[resizing].style.flex = `0 0 ${w}px`; COL[resizing].style.width = `${w}px`;
 });
 window.addEventListener("mouseup", () => { if(resizing){ resizing = null; document.body.style.userSelect = ""; document.body.style.cursor = ""; saveConfig(); } });
