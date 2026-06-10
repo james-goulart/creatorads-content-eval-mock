@@ -147,7 +147,7 @@
       </button>
 
       <!-- ===== COLUMN 2 — ANALYSIS / BRIEFING + DECISION ===== -->
-      <section id="analysisCol" data-slot="analysis" class="relative w-[420px] shrink-0 flex flex-col rounded-lg border bg-white overflow-hidden">
+      <section id="analysisCol" data-slot="analysis" class="relative min-w-[300px] flex flex-col rounded-lg border bg-white overflow-hidden">
         <div class="col-resize absolute top-0 right-0 h-full w-1.5 z-20 cursor-col-resize hover:bg-[#FF007E]/40" data-resize="analysis" title="Arraste para redimensionar"></div>
         <div class="p-2 border-b flex items-center gap-1.5">
           <span class="col-grip shrink-0 cursor-grab active:cursor-grabbing text-slate-300 hover:text-slate-500" draggable="true" data-grip="analysis" title="Arraste para reordenar a coluna"><i data-lucide="grip-vertical" class="size-4"></i></span>
@@ -249,7 +249,7 @@
       </section>
 
       <!-- ===== COLUMN 3 — VIDEO (centered) ===== -->
-      <section id="videoCol" data-slot="video" class="relative flex-1 min-w-[420px] flex rounded-lg border bg-white overflow-hidden">
+      <section id="videoCol" data-slot="video" class="relative min-w-[360px] flex rounded-lg border bg-white overflow-hidden">
         <div class="col-resize absolute top-0 right-0 h-full w-1.5 z-20 cursor-col-resize hover:bg-[#FF007E]/40" data-resize="video" title="Arraste para redimensionar (duplo-clique para preencher)"></div>
 
         <!-- side header: creator info + navegador (à direita do vídeo) -->
@@ -572,8 +572,8 @@ function toggleHTML(state){ // state: ok | fail
 }
 function lineHTML(item, id){
   const gIcon = item.guardian === "ok"
-    ? '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>'
-    : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
+    ? '<i data-lucide="shield-check" class="size-4 text-blue-600"></i>'
+    : '<i data-lucide="shield-x" class="size-4 text-red-600"></i>';
   return `
   <div class="line flex items-start gap-2 rounded-md border px-2 py-1.5 text-sm" data-id="${id}" data-label="${item.label}" data-guardian="${item.guardian}" data-state="${item.guardian}">
     <div class="flex flex-col gap-1 w-12 shrink-0">${timeChips(item.times)}</div>
@@ -597,7 +597,7 @@ function paintToggleEl(el, on){
 }
 function buildAccordion(groupId, iconName, label, children, open=false){
   const gOk = children.every(c => c.guardian === 'ok');
-  const gIcon = gOk ? '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>' : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
+  const gIcon = gOk ? '<i data-lucide="shield-check" class="size-4 text-blue-600"></i>' : '<i data-lucide="shield-x" class="size-4 text-red-600"></i>';
   document.querySelector(`[data-accordion-mount="${groupId}"]`).innerHTML = `
     <div class="rounded-md border overflow-hidden" data-accordion="${groupId}">
       <div class="acc-head flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-slate-50">
@@ -614,15 +614,11 @@ function updateGroup(groupId){
   const acc = document.querySelector(`[data-accordion="${groupId}"]`); if(!acc) return;
   const kids = [...acc.querySelectorAll('.line')];
   const head = acc.querySelector('.acc-head');
-  // cabeçalho destacado: azul se todos os subitens estão ok, vermelho se algum reprovado
+  // só a COR do cabeçalho muda com os toggles: azul se todos os subitens ok, vermelho se algum reprovado.
+  // (o ícone consolidado da Guardian é fixo por conteúdo — definido em buildAccordion/setGuardianForTab)
   const allOk = kids.every(l => l.dataset.state === 'ok');
   if(allOk){ head.style.background = "#eff6ff"; head.style.boxShadow = "inset 3px 0 0 0 #3b82f6"; }
   else { head.style.background = "#fef2f2"; head.style.boxShadow = "inset 3px 0 0 0 #ef4444"; }
-  // consolidated Guardian icon (derived from children's Guardian verdict)
-  const gIcon = head.querySelector('[title="Avaliação consolidada do Guardian"]');
-  if(gIcon) gIcon.innerHTML = kids.every(l => l.dataset.guardian === "ok")
-    ? '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>'
-    : '<i data-lucide="circle-x" class="size-4 text-red-600"></i>';
 }
 buildAccordion("guidelines", "list-checks", "Diretrizes de conteúdo", guidelines, true);
 buildAccordion("audio", "audio-lines", "Qualidade de áudio", audioChildren);
@@ -777,8 +773,8 @@ function setGuardianForTab(status){
     l.dataset.guardian = fail ? "fail" : "ok";
     const gi = l.querySelector('[title="Avaliação do Guardian"]');
     if(gi) gi.innerHTML = fail
-      ? '<i data-lucide="circle-x" class="size-4 text-red-600"></i>'
-      : '<i data-lucide="circle-check-big" class="size-4 text-blue-600"></i>';
+      ? '<i data-lucide="shield-x" class="size-4 text-red-600"></i>'
+      : '<i data-lucide="shield-check" class="size-4 text-blue-600"></i>';
   });
   const tone = CREATORS[status].gTone || "warn";
   const cfg = { ok:["text-blue-600","shield-check","Pré-aprovado pela Guardian"],
@@ -787,6 +783,15 @@ function setGuardianForTab(status){
   const gh = document.getElementById("guardianHeader");
   gh.className = `flex items-center gap-1 text-xs ${cfg[0]} mb-1`;
   gh.innerHTML = `<i data-lucide="${cfg[1]}" class="size-4"></i> ${cfg[2]}`;
+  // ícone consolidado da Guardian em cada acordeão (fixo por conteúdo)
+  ["guidelines","audio","brand"].forEach(g => {
+    const acc = document.querySelector(`[data-accordion="${g}"]`); if(!acc) return;
+    const allOkG = [...acc.querySelectorAll(".line")].every(l => l.dataset.guardian === "ok");
+    const ic = acc.querySelector('[title="Avaliação consolidada do Guardian"]');
+    if(ic) ic.innerHTML = allOkG
+      ? '<i data-lucide="shield-check" class="size-4 text-blue-600"></i>'
+      : '<i data-lucide="shield-x" class="size-4 text-red-600"></i>';
+  });
 }
 function applyCreator(status){
   const c = CREATORS[status];
@@ -884,8 +889,8 @@ const analysisCol = document.getElementById("analysisCol"), videoCol = document.
 
 /* ======== persisted layout: column order, widths, collapse states ======== */
 const LS_KEY = "ccd_mock_layout";
-const DEFAULTS = { order:["moments","analysis","video","timeline"], widths:{moments:224,analysis:420,timeline:384,video:null}, timelineCollapsed:true, momentsCollapsed:false };
-const MINW = { moments:150, analysis:300, timeline:260, video:320 };
+const DEFAULTS = { order:["moments","analysis","video","timeline"], widths:{moments:224,analysis:null,timeline:384,video:480}, timelineCollapsed:true, momentsCollapsed:false };
+const MINW = { moments:150, analysis:300, timeline:260, video:360 };
 const RESIZE_SIGN = { moments:1, analysis:1, timeline:-1, video:1 }; // timeline handle is on the left edge
 let config;
 try { config = Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem(LS_KEY) || "{}")); }
@@ -896,10 +901,9 @@ const saveConfig = () => { try { localStorage.setItem(LS_KEY, JSON.stringify(con
 
 const COL = { moments: momentsCol, analysis: analysisCol, timeline: timelineCol, video: videoCol };
 function applyWidths(){
-  ["moments","analysis","timeline"].forEach(k => { COL[k].style.flex = `0 0 ${config.widths[k]}px`; COL[k].style.width = `${config.widths[k]}px`; });
-  // vídeo sempre cresce para preencher o espaço restante (mantém a coluna mais à direita colada na borda);
-  // a largura ajustada vira a base mínima
-  videoCol.style.flex = `1 1 ${config.widths.video || 0}px`; videoCol.style.width = "";
+  ["moments","timeline","video"].forEach(k => { COL[k].style.flex = `0 0 ${config.widths[k]}px`; COL[k].style.width = `${config.widths[k]}px`; });
+  // Análise é a coluna flexível: cresce/encolhe ao esconder/mostrar colunas (mantém a mais à direita colada na borda).
+  analysisCol.style.flex = `1 1 ${config.widths.analysis || 0}px`; analysisCol.style.width = "";
 }
 function applyColOrder(){ document.querySelectorAll("[data-slot]").forEach(el => el.style.order = config.order.indexOf(el.dataset.slot)); }
 
@@ -953,7 +957,7 @@ window.addEventListener("mousemove", e => {
   if(!resizing) return;
   let w = Math.max(MINW[resizing], Math.min(startW + RESIZE_SIGN[resizing] * (e.clientX - startX), 900));
   config.widths[resizing] = w;
-  if(resizing === "video"){ videoCol.style.flex = `1 1 ${w}px`; videoCol.style.width = ""; }
+  if(resizing === "analysis"){ analysisCol.style.flex = `1 1 ${w}px`; analysisCol.style.width = ""; }
   else { COL[resizing].style.flex = `0 0 ${w}px`; COL[resizing].style.width = `${w}px`; }
 });
 window.addEventListener("mouseup", () => { if(resizing){ resizing = null; document.body.style.userSelect = ""; document.body.style.cursor = ""; saveConfig(); } });
