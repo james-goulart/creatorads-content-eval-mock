@@ -894,9 +894,9 @@ const saveConfig = () => { try { localStorage.setItem(LS_KEY, JSON.stringify(con
 const COL = { moments: momentsCol, analysis: analysisCol, timeline: timelineCol, video: videoCol };
 function applyWidths(){
   ["moments","analysis","timeline"].forEach(k => { COL[k].style.flex = `0 0 ${config.widths[k]}px`; COL[k].style.width = `${config.widths[k]}px`; });
-  // vídeo: largura explícita se o usuário ajustou; senão preenche o espaço restante
-  if(config.widths.video){ videoCol.style.flex = `0 0 ${config.widths.video}px`; videoCol.style.width = `${config.widths.video}px`; }
-  else { videoCol.style.flex = "1 1 0"; videoCol.style.width = ""; }
+  // vídeo sempre cresce para preencher o espaço restante (mantém a coluna mais à direita colada na borda);
+  // a largura ajustada vira a base mínima
+  videoCol.style.flex = `1 1 ${config.widths.video || 0}px`; videoCol.style.width = "";
 }
 function applyColOrder(){ document.querySelectorAll("[data-slot]").forEach(el => el.style.order = config.order.indexOf(el.dataset.slot)); }
 
@@ -949,7 +949,9 @@ document.querySelectorAll("[data-resize]").forEach(h => {
 window.addEventListener("mousemove", e => {
   if(!resizing) return;
   let w = Math.max(MINW[resizing], Math.min(startW + RESIZE_SIGN[resizing] * (e.clientX - startX), 900));
-  config.widths[resizing] = w; COL[resizing].style.flex = `0 0 ${w}px`; COL[resizing].style.width = `${w}px`;
+  config.widths[resizing] = w;
+  if(resizing === "video"){ videoCol.style.flex = `1 1 ${w}px`; videoCol.style.width = ""; }
+  else { COL[resizing].style.flex = `0 0 ${w}px`; COL[resizing].style.width = `${w}px`; }
 });
 window.addEventListener("mouseup", () => { if(resizing){ resizing = null; document.body.style.userSelect = ""; document.body.style.cursor = ""; saveConfig(); } });
 
