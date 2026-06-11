@@ -38,9 +38,15 @@
     <span class="px-2 py-1">Hidrata+ · Lançamento Sérum Reparador</span><i data-lucide="chevron-right" class="size-3"></i>
     <span class="px-2 py-1 text-white font-medium">Conteúdos</span>
   </nav>
-  <button id="whatsChanged" class="absolute left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#FF007E] to-[#c026d3] hover:opacity-90 px-4 py-1.5 text-sm font-semibold shadow-lg">
-    <i data-lucide="sparkles" class="size-4"></i> O que mudou?
-  </button>
+  <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
+    <button id="whatsChanged" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#FF007E] to-[#c026d3] hover:opacity-90 px-4 py-1.5 text-sm font-semibold shadow-lg">
+      <i data-lucide="sparkles" class="size-4"></i> O que mudou?
+    </button>
+    <div class="flex items-center rounded-full bg-white/10 p-0.5 text-xs font-medium" title="Alterna entre a visão da operação (BL) e a visão da marca">
+      <button id="viewOps" class="px-3 py-1 rounded-full bg-white text-slate-800">Ops</button>
+      <button id="viewBrand" class="px-3 py-1 rounded-full text-slate-300 hover:text-white">Marca</button>
+    </div>
+  </div>
   <div class="ml-auto flex items-center gap-2">
     <!-- brand selector (como no produto atual) -->
     <button class="flex items-center gap-2 rounded-md bg-white/10 hover:bg-white/20 pl-1.5 pr-2 py-1" title="Trocar de marca">
@@ -78,9 +84,10 @@
     <!-- status tab bar -->
     <div class="bg-white border-b px-4 flex items-center gap-1 shrink-0">
       <button class="status-tab active flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes">Pendentes <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">12</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentesReprovados" data-ops-only title="Reprovados 3x pela Guardian — em revisão manual (oculto para a marca)">Pendentes Reprovados <span class="text-[10px] bg-orange-100 text-orange-700 rounded-full px-1.5">5</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="reprovados">Reprovados <span class="text-[10px] bg-red-100 text-red-700 rounded-full px-1.5">4</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados">Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes">Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes" data-ops-only>Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
     </div>
 
     <!-- ===================== WORKSPACE ===================== -->
@@ -365,7 +372,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="panels-top-left" class="size-4 text-[#FF007E]"></i> 2. Navegação &amp; abas</h3>
-        <p class="mt-1">O menu lateral vira um <b>trilho de ícones que expande ao passar o mouse</b> (hoje é largura fixa), liberando espaço para o conteúdo. As abas de status ganham a <b>nova aba “Contestações”</b>. O <b>creator e a contagem (“1 de N”) mudam conforme a aba</b>.</p>
+        <p class="mt-1">O menu lateral vira um <b>trilho de ícones que expande ao passar o mouse</b> (hoje é largura fixa), liberando espaço para o conteúdo. As abas de status ganham <b>“Contestações”</b> e <b>“Pendentes Reprovados”</b> (conteúdo reprovado 3× pela Guardian → revisão manual). O <b>creator e a contagem (“1 de N”) mudam conforme a aba</b>. Um seletor <b>Ops / Marca</b> (no topo) alterna a visão: na <b>Marca</b>, as abas internas (Contestações e Pendentes Reprovados) ficam ocultas.</p>
       </div>
 
       <div>
@@ -526,6 +533,27 @@ const CREATORS = {
       { type:"reviewer", title:"Feedback enviado", sub:"Ruído constante atrapalha a fala durante todo o vídeo.", when:"31/05 16:25" },
       { type:"internal", author:"James Goulart (BL)", text:"Áudio realmente baixo. @marca, pedimos regravação com microfone de lapela mais próximo.", when:"31/05 16:40" },
       { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo reprovado", sub:"James Goulart", when:"31/05 17:00" },
+    ],
+  },
+  pendentesReprovados: {
+    name:"Whindersson Nunes", id:"#84120", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Whindersson_2021.png/330px-Whindersson_2021.png",
+    ig:"@whindersson", igUrl:"https://instagram.com/whindersson", tt:"@whinderssonnunes", ttUrl:"https://www.tiktok.com/@whinderssonnunes", yt:"Whindersson Nunes", ytUrl:"https://www.youtube.com/@whinderssonnunes", received:"Recebido em 02/06/2026 às 10:00 · v3",
+    guardianFails:["Mencionar a frase/claim exato do produto e o “efeito melt”","Produto em primeiro plano nos 3 primeiros segundos"], gTone:"bad",
+    contestation:"",
+    timeline:[
+      { type:"round", text:"Submissão 1" },
+      { type:"submit", title:"Conteúdo enviado (v1)", when:"31/05 18:00" },
+      { type:"system", icon:"bot", color:"bg-red-500", title:"Análise Guardian", sub:"Indicou reprovação", when:"31/05 18:01" },
+      { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo recusado", sub:"Novo vídeo solicitado", when:"31/05 18:02" },
+      { type:"round", text:"Submissão 2" },
+      { type:"submit", title:"Novo conteúdo enviado (v2)", when:"01/06 12:30" },
+      { type:"system", icon:"bot", color:"bg-red-500", title:"Análise Guardian", sub:"Indicou reprovação", when:"01/06 12:31" },
+      { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo recusado", sub:"Novo vídeo solicitado", when:"01/06 12:32" },
+      { type:"round", text:"Submissão 3" },
+      { type:"submit", title:"Novo conteúdo enviado (v3)", when:"02/06 10:00" },
+      { type:"system", icon:"bot", color:"bg-red-500", title:"Análise Guardian", sub:"Indicou reprovação (3ª vez)", when:"02/06 10:01" },
+      { type:"internal", author:"Sistema (BL)", text:"3ª reprovação da Guardian → escalado para revisão manual. ⚠️ Não enviar para a marca.", when:"02/06 10:01" },
+      { type:"system", icon:"eye", color:"bg-slate-500", title:"Em revisão humana", sub:"James Goulart", when:"agora" },
     ],
   },
   aprovados: {
@@ -717,7 +745,7 @@ function anyEdited(){ return [...document.querySelectorAll(".line")].some(l => l
 function setBtn(label, classes, dis=false){ btn.textContent = label; btn.disabled = dis; btn.className = `flex-1 rounded-md py-2.5 text-sm font-semibold transition-colors ${dis?'cursor-not-allowed':''} ${classes}`; }
 function refreshDecision(){
   const fc = failCount(), fh = document.getElementById("failHint");
-  fh.textContent = (fc > 0 && (currentStatus === "pendentes" || currentStatus === "contestacoes"))
+  fh.textContent = (fc > 0 && (currentStatus === "pendentes" || currentStatus === "pendentesReprovados" || currentStatus === "contestacoes"))
     ? `${fc} ${fc>1?"itens recusados":"item recusado"} — aprove ou recuse o conteúdo`
     : "";
   syncAutoFeedback();
@@ -736,7 +764,7 @@ function refreshDecision(){
   if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-blue-700 text-white", true); return; }
   if(neg){
     decision = "reject";
-    const label = currentStatus === "contestacoes" ? "Reprovar Contestação" : (currentStatus === "pendentes" ? "Reprovar" : "Recusar");
+    const label = currentStatus === "contestacoes" ? "Reprovar Contestação" : ((currentStatus === "pendentes" || currentStatus === "pendentesReprovados") ? "Reprovar" : "Recusar");
     setBtn(label, "bg-red-600 text-white hover:bg-red-700");
   } else {
     decision = "approve";
@@ -773,8 +801,8 @@ function syncAutoFeedback(){
 /* ---------- status tabs ---------- */
 const statusPill = document.getElementById("statusPill");
 const contestationBox = document.getElementById("contestationBox");
-const pill = { pendentes:["Pendente","bg-amber-100 text-amber-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
-const BUCKET_COUNTS = { pendentes:12, reprovados:4, aprovados:37, contestacoes:3 };
+const pill = { pendentes:["Pendente","bg-amber-100 text-amber-700"], pendentesReprovados:["Revisão manual","bg-orange-100 text-orange-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
+const BUCKET_COUNTS = { pendentes:12, pendentesReprovados:5, reprovados:4, aprovados:37, contestacoes:3 };
 function resetLines(){ // back to Guardian's initial position (clears purple)
   document.querySelectorAll(".line").forEach(l => { l.dataset.state = l.dataset.guardian; paintToggle(l); });
   updateGroup("guidelines"); updateGroup("audio"); updateGroup("brand");
@@ -858,7 +886,7 @@ btn.addEventListener("click", () => {
 const closeModal = () => modal.hidden = true;
 document.getElementById("closeModal").addEventListener("click", closeModal);
 document.getElementById("cancelReject").addEventListener("click", closeModal);
-document.getElementById("confirmReject").addEventListener("click", () => { closeModal(); setBtn(currentStatus === "contestacoes" ? "Contestação reprovada ✕" : (currentStatus === "pendentes" ? "Reprovado ✕" : "Recusado ✕"), "bg-red-700 text-white", true); });
+document.getElementById("confirmReject").addEventListener("click", () => { closeModal(); setBtn(currentStatus === "contestacoes" ? "Contestação reprovada ✕" : ((currentStatus === "pendentes" || currentStatus === "pendentesReprovados") ? "Reprovado ✕" : "Recusado ✕"), "bg-red-700 text-white", true); });
 
 /* ---------- "Reprovar por outro motivo" (kebab, só em Pendentes) ---------- */
 const otherReasonBtn = document.getElementById("otherReasonBtn");
@@ -895,6 +923,20 @@ document.getElementById("closeChanges").addEventListener("click", hideChanges);
 document.getElementById("closeChanges2").addEventListener("click", hideChanges);
 changesModal.addEventListener("click", e => { if(e.target === changesModal) hideChanges(); });
 openChanges(); // show once on first load so testers see what changed
+
+/* ---------- Ops / Marca view toggle (esconde abas internas da marca) ---------- */
+function applyView(view){
+  const brand = view === "brand";
+  document.querySelectorAll(".status-tab[data-ops-only]").forEach(t => { t.hidden = brand; });
+  // se a aba ativa ficou escondida, volta para Pendentes
+  const active = document.querySelector(".status-tab.active");
+  if(brand && active && active.hasAttribute("data-ops-only")) document.querySelector('.status-tab[data-status="pendentes"]').click();
+  const ops = document.getElementById("viewOps"), br = document.getElementById("viewBrand");
+  ops.className = `px-3 py-1 rounded-full ${brand ? "text-slate-300 hover:text-white" : "bg-white text-slate-800"}`;
+  br.className = `px-3 py-1 rounded-full ${brand ? "bg-white text-slate-800" : "text-slate-300 hover:text-white"}`;
+}
+document.getElementById("viewOps").addEventListener("click", () => applyView("ops"));
+document.getElementById("viewBrand").addEventListener("click", () => applyView("brand"));
 
 document.getElementById("toggleSide").addEventListener("click", () => document.getElementById("sideNav").classList.toggle("pinned"));
 const momentsCol = document.getElementById("momentsCol"), momentsExpand = document.getElementById("momentsExpand");
