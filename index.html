@@ -87,7 +87,9 @@
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentesReprovados" data-ops-only title="Reprovados 3x pela Guardian — em revisão manual (oculto para a marca)">Pré-Reprovados <span class="text-[10px] bg-orange-100 text-orange-700 rounded-full px-1.5">5</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="reprovados" data-ops-only>Reprovados <span class="text-[10px] bg-red-100 text-red-700 rounded-full px-1.5">4</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados">Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes" data-ops-only>Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes" data-ops-only title="Creators que contestaram uma reprovação">Contestações · Creators <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoesMarca" data-ops-only title="Marcas que contestaram uma aprovação">Contestações · Marca <span class="text-[10px] bg-fuchsia-100 text-fuchsia-700 rounded-full px-1.5">2</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="brandContestacoes" data-brand-only hidden title="Aprovações que você contestou — aguardando resposta">Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">2</span></button>
     </div>
 
     <!-- ===================== WORKSPACE ===================== -->
@@ -234,7 +236,7 @@
         <div class="border-t p-3 bg-slate-50 space-y-2">
           <!-- creator contestation appears here on the Contestações tab -->
           <div id="contestationBox" hidden class="rounded-lg border border-violet-200 bg-violet-50 p-2.5">
-            <div class="flex items-center gap-2 text-xs font-semibold text-violet-700 mb-1"><i data-lucide="message-circle-warning" class="size-4"></i> Contestação do creator</div>
+            <div class="flex items-center gap-2 text-xs font-semibold text-violet-700 mb-1"><i data-lucide="message-circle-warning" class="size-4"></i> <span id="contestationLabel">Contestação do creator</span></div>
             <p id="contestationText" class="text-sm text-slate-700">"O produto aparece em primeiro plano já nos 2 primeiros segundos, podem revisar por favor?"</p>
           </div>
           <label class="text-xs font-semibold text-slate-600 flex items-center gap-1"><i data-lucide="message-square-text" class="size-4"></i> Feedback ao creator
@@ -587,6 +589,36 @@ const CREATORS = {
       { type:"system", icon:"clock", color:"bg-amber-500", title:"Aguardando decisão", sub:"Contestação em análise", when:"agora" },
     ],
   },
+  contestacoesMarca: {
+    name:"Camila Coelho", id:"#77310", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Camila_Coelho_2015.jpg/330px-Camila_Coelho_2015.jpg",
+    ig:"@camilacoelho", igUrl:"https://instagram.com/camilacoelho", tt:"@camilacoelho", ttUrl:"https://www.tiktok.com/@camilacoelho", yt:"Camila Coelho", ytUrl:"https://www.youtube.com/@CamilaCoelho", received:"Recebido em 28/05/2026 às 09:00 · v1",
+    guardianFails:[], gTone:"ok",
+    contestationLabel:"Contestação da marca",
+    contestation:'"Esse conteúdo não reflete o posicionamento atual da marca. Pedimos revisão da aprovação."',
+    timeline:[
+      { type:"round", text:"Submissão 1" },
+      { type:"submit", title:"Conteúdo enviado (v1)", when:"28/05 09:00" },
+      { type:"system", icon:"bot", color:"bg-blue-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"28/05 09:01" },
+      { type:"system", icon:"check", color:"bg-blue-500", title:"Conteúdo aprovado", sub:"James Goulart", when:"28/05 10:30" },
+      { type:"internal", author:"Marca · Hidrata+", text:"Contestamos a aprovação: o conteúdo não reflete o posicionamento atual da marca.", when:"28/05 15:20" },
+      { type:"system", icon:"clock", color:"bg-fuchsia-500", title:"Contestação da marca", sub:"Aguardando revisão da operação", when:"agora" },
+    ],
+  },
+  brandContestacoes: {
+    name:"Niina Secrets", id:"#91022", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Niina_Secrets%2C_Junho_de_2017%2C_02.jpg/330px-Niina_Secrets%2C_Junho_de_2017%2C_02.jpg",
+    ig:"@niinasecrets", igUrl:"https://instagram.com/niinasecrets", tt:"@niinasecrets", ttUrl:"https://www.tiktok.com/@niinasecrets", yt:"NiinaSecrets", ytUrl:"https://www.youtube.com/channel/UCAkZ7bimIU9m7wT6Th0FcEw", received:"Recebido em 27/05/2026 às 16:00 · v1",
+    guardianFails:[], gTone:"ok",
+    contestationLabel:"Sua contestação · aguardando resposta",
+    contestation:'"Pedimos revisão: o produto aparece pouco e a marca quase não é citada."',
+    timeline:[
+      { type:"round", text:"Submissão 1" },
+      { type:"submit", title:"Conteúdo enviado (v1)", when:"27/05 16:00" },
+      { type:"system", icon:"bot", color:"bg-blue-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"27/05 16:01" },
+      { type:"system", icon:"check", color:"bg-blue-500", title:"Conteúdo aprovado", sub:"Operação BL", when:"27/05 17:30" },
+      { type:"internal", author:"Marca · Hidrata+", text:"Contestamos a aprovação: o produto aparece pouco e a marca quase não é citada.", when:"28/05 09:10" },
+      { type:"system", icon:"clock", color:"bg-amber-500", title:"Aguardando resposta da operação", sub:"Contestação enviada", when:"agora" },
+    ],
+  },
 };
 let TL_AVATAR = CREATORS.pendentes.photo;
 
@@ -747,7 +779,8 @@ function anyEdited(){ return [...document.querySelectorAll(".line")].some(l => l
 function setBtn(label, classes, dis=false){ btn.textContent = label; btn.disabled = dis; btn.className = `flex-1 rounded-md py-2.5 text-sm font-semibold transition-colors ${dis?'cursor-not-allowed':''} ${classes}`; }
 function refreshDecision(){
   const fc = failCount(), fh = document.getElementById("failHint");
-  fh.textContent = (fc > 0 && (currentStatus === "pendentes" || currentStatus === "pendentesReprovados" || currentStatus === "contestacoes"))
+  const isContest = currentStatus === "contestacoes" || currentStatus === "contestacoesMarca";
+  fh.textContent = (fc > 0 && (currentStatus === "pendentes" || currentStatus === "pendentesReprovados" || isContest))
     ? `${fc} ${fc>1?"itens recusados":"item recusado"} — aprove ou recuse o conteúdo`
     : "";
   syncAutoFeedback();
@@ -761,6 +794,7 @@ function refreshDecision(){
   document.getElementById("otherReasonMenu").hidden = true;
   document.querySelectorAll("#otherReasonMenu [data-ops]").forEach(b => b.hidden = currentView === "brand");
   document.querySelectorAll("#otherReasonMenu [data-brand]").forEach(b => b.hidden = currentView !== "brand");
+  if(currentStatus === "brandContestacoes"){ decision = "none"; setBtn("Aguardando resposta da operação", "bg-slate-200 text-slate-500", true); return; }
   if(currentStatus === "reprovados"){
     if(!anyEdited()){ decision = "none"; setBtn("Reprovado — altere avaliação para reverter", "bg-slate-200 text-slate-500", true); }
     else if(!anyFail()){ decision = "reverter"; setBtn("Reverter e Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
@@ -771,11 +805,11 @@ function refreshDecision(){
   if(currentStatus === "aprovados"){ decision = "done"; setBtn("Aprovado ✓", "bg-blue-700 text-white", true); return; }
   if(neg){
     decision = "reject";
-    const label = currentStatus === "contestacoes" ? "Reprovar Contestação" : ((currentStatus === "pendentes" || currentStatus === "pendentesReprovados") ? "Reprovar" : "Recusar");
+    const label = isContest ? "Reprovar Contestação" : ((currentStatus === "pendentes" || currentStatus === "pendentesReprovados") ? "Reprovar" : "Recusar");
     setBtn(label, "bg-red-600 text-white hover:bg-red-700");
   } else {
     decision = "approve";
-    setBtn(currentStatus === "contestacoes" ? "Aprovar Contestação" : (currentView === "brand" ? "Aprovar conteúdo" : "Aprovar"), "bg-blue-600 text-white hover:bg-blue-700");
+    setBtn(isContest ? "Aprovar Contestação" : (currentView === "brand" ? "Aprovar conteúdo" : "Aprovar"), "bg-blue-600 text-white hover:bg-blue-700");
   }
 }
 
@@ -808,8 +842,8 @@ function syncAutoFeedback(){
 /* ---------- status tabs ---------- */
 const statusPill = document.getElementById("statusPill");
 const contestationBox = document.getElementById("contestationBox");
-const pill = { pendentes:["Pré-aprovado","bg-amber-100 text-amber-700"], pendentesReprovados:["Revisão manual","bg-orange-100 text-orange-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
-const BUCKET_COUNTS = { pendentes:12, pendentesReprovados:5, reprovados:4, aprovados:37, contestacoes:3 };
+const pill = { pendentes:["Pré-aprovado","bg-amber-100 text-amber-700"], pendentesReprovados:["Revisão manual","bg-orange-100 text-orange-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação · creator","bg-violet-100 text-violet-700"], contestacoesMarca:["Contestação · marca","bg-fuchsia-100 text-fuchsia-700"], brandContestacoes:["Aguardando resposta","bg-violet-100 text-violet-700"] };
+const BUCKET_COUNTS = { pendentes:12, pendentesReprovados:5, reprovados:4, aprovados:37, contestacoes:3, contestacoesMarca:2, brandContestacoes:2 };
 function resetLines(){ // back to Guardian's initial position (clears purple)
   document.querySelectorAll(".line").forEach(l => { l.dataset.state = l.dataset.guardian; paintToggle(l); });
   updateGroup("guidelines"); updateGroup("audio"); updateGroup("brand");
@@ -856,6 +890,7 @@ function applyCreator(status){
   document.getElementById("cYtLink").href = c.ytUrl;
   document.getElementById("cReceived").textContent = c.received;
   document.getElementById("contestationText").textContent = c.contestation;
+  document.getElementById("contestationLabel").textContent = c.contestationLabel || "Contestação do creator";
   TL_AVATAR = c.photo;
   document.getElementById("videoCount").textContent = `1 de ${BUCKET_COUNTS[status]}`;
   renderTimeline(c.timeline);
@@ -866,7 +901,7 @@ document.querySelectorAll(".status-tab").forEach(tab => tab.addEventListener("cl
   currentStatus = tab.dataset.status;
   const [label, cls] = pill[currentStatus];
   statusPill.textContent = label; statusPill.className = `text-[11px] rounded-full px-2 py-0.5 font-medium ${cls}`;
-  contestationBox.hidden = currentStatus !== "contestacoes";
+  contestationBox.hidden = !["contestacoes","contestacoesMarca","brandContestacoes"].includes(currentStatus);
   applyCreator(currentStatus);
   setGuardianForTab(currentStatus); // veredito da Guardian por conteúdo/aba
   resetLines();
@@ -886,14 +921,14 @@ btn.addEventListener("click", () => {
     document.getElementById("rejectedList").innerHTML = rejected.map(r => `<li class="flex items-center gap-2"><i data-lucide="circle-x" class="size-4 text-red-600 shrink-0"></i>${r}</li>`).join("");
     document.getElementById("modalFeedback").value = document.getElementById("feedbackSlot").value;
     modal.hidden = false; lucide.createIcons();
-  } else if(decision === "approve"){ setBtn(currentStatus === "contestacoes" ? "Contestação aprovada ✓" : "Aprovado ✓", "bg-blue-700 text-white", true); }
+  } else if(decision === "approve"){ setBtn((currentStatus === "contestacoes" || currentStatus === "contestacoesMarca") ? "Contestação aprovada ✓" : "Aprovado ✓", "bg-blue-700 text-white", true); }
   else if(decision === "reverter"){ setBtn("Revertido e aprovado ✓", "bg-blue-700 text-white", true); }
   else if(decision === "manter"){ setBtn("Reprovação mantida · Guardian corrigida ✓", "bg-slate-700 text-white", true); }
 });
 const closeModal = () => modal.hidden = true;
 document.getElementById("closeModal").addEventListener("click", closeModal);
 document.getElementById("cancelReject").addEventListener("click", closeModal);
-document.getElementById("confirmReject").addEventListener("click", () => { closeModal(); setBtn(currentStatus === "contestacoes" ? "Contestação reprovada ✕" : ((currentStatus === "pendentes" || currentStatus === "pendentesReprovados") ? "Reprovado ✕" : "Recusado ✕"), "bg-red-700 text-white", true); });
+document.getElementById("confirmReject").addEventListener("click", () => { closeModal(); setBtn((currentStatus === "contestacoes" || currentStatus === "contestacoesMarca") ? "Contestação reprovada ✕" : ((currentStatus === "pendentes" || currentStatus === "pendentesReprovados") ? "Reprovado ✕" : "Recusado ✕"), "bg-red-700 text-white", true); });
 
 /* ---------- "Reprovar por outro motivo" (kebab, só em Pendentes) ---------- */
 const otherReasonBtn = document.getElementById("otherReasonBtn");
@@ -948,9 +983,10 @@ function applyView(view){
   const brand = view === "brand";
   currentView = view;
   document.querySelectorAll(".status-tab[data-ops-only]").forEach(t => { t.hidden = brand; });
-  // se a aba ativa ficou escondida, volta para Pendentes
+  document.querySelectorAll(".status-tab[data-brand-only]").forEach(t => { t.hidden = !brand; });
+  // se a aba ativa ficou escondida, volta para Pré-Aprovados
   const active = document.querySelector(".status-tab.active");
-  if(brand && active && active.hasAttribute("data-ops-only")) document.querySelector('.status-tab[data-status="pendentes"]').click();
+  if(active && active.hidden) document.querySelector('.status-tab[data-status="pendentes"]').click();
   const ops = document.getElementById("viewOps"), br = document.getElementById("viewBrand");
   ops.className = `px-3 py-1 rounded-full ${brand ? "text-slate-300 hover:text-white" : "bg-white text-slate-800"}`;
   br.className = `px-3 py-1 rounded-full ${brand ? "bg-white text-slate-800" : "text-slate-300 hover:text-white"}`;
