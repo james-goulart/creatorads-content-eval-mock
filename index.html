@@ -83,12 +83,14 @@
 
     <!-- status tab bar -->
     <div class="bg-white border-b px-4 flex items-center gap-1 shrink-0">
-      <button class="status-tab active flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes">Pré-Aprovados <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">12</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentesReprovados" data-ops-only title="Reprovados 3x pela Guardian — em revisão manual (oculto para a marca)">Pré-Reprovados <span class="text-[10px] bg-orange-100 text-orange-700 rounded-full px-1.5">5</span></button>
+      <!-- OPS -->
+      <button class="status-tab active flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes" data-ops-only title="Aguardando revisão da operação (inclui pré-aprovados e escalados)">Pendentes <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">17</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="reprovados" data-ops-only>Reprovados <span class="text-[10px] bg-red-100 text-red-700 rounded-full px-1.5">4</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados">Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes" data-ops-only title="Creators que contestaram uma reprovação">Contestações · Creators <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoesMarca" data-ops-only title="Marcas que contestaram uma aprovação">Contestações · Marca <span class="text-[10px] bg-fuchsia-100 text-fuchsia-700 rounded-full px-1.5">2</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados" data-ops-only>Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoesMarca" data-ops-only title="Contestações de creators e marcas">Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">5</span></button>
+      <!-- MARCA -->
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes" data-brand-only hidden>Pré-Aprovados <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">12</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados" data-brand-only hidden>Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="brandContestacoes" data-brand-only hidden title="Aprovações que você contestou — aguardando resposta">Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">2</span></button>
     </div>
 
@@ -303,7 +305,7 @@
           <!-- navegador (movido para cá) -->
           <div class="mt-auto flex items-center justify-center gap-3 pt-2 border-t text-slate-500">
             <button class="hover:text-slate-800"><i data-lucide="chevron-left" class="size-5"></i></button>
-            <span id="videoCount" class="text-xs">1 de 12</span>
+            <span id="videoCount" class="text-xs">1 de 17</span>
             <button class="hover:text-slate-800"><i data-lucide="chevron-right" class="size-5"></i></button>
           </div>
         </aside>
@@ -376,7 +378,7 @@
 
       <div>
         <h3 class="font-semibold text-slate-900 flex items-center gap-2"><i data-lucide="panels-top-left" class="size-4 text-[#FF007E]"></i> 2. Navegação &amp; abas</h3>
-        <p class="mt-1">O menu lateral vira um <b>trilho de ícones que expande ao passar o mouse</b> (hoje é largura fixa), liberando espaço para o conteúdo. As abas de status ganham <b>“Contestações”</b> e <b>“Pendentes Reprovados”</b> (conteúdo reprovado 3× pela Guardian → revisão manual). O <b>creator e a contagem (“1 de N”) mudam conforme a aba</b>. Um seletor <b>Ops / Marca</b> (no topo) alterna a visão: na <b>Marca</b>, as abas internas (Contestações e Pendentes Reprovados) ficam ocultas.</p>
+        <p class="mt-1">O menu lateral vira um <b>trilho de ícones que expande ao passar o mouse</b> (hoje é largura fixa), liberando espaço para o conteúdo. As abas de status na <b>visão Ops</b> são <b>Pendentes · Reprovados · Aprovados · Contestações</b> — “Pendentes” agrupa pré-aprovados e escalados (reprovados 3× pela Guardian → revisão manual) e “Contestações” agrupa contestações de creators e marcas. Um seletor <b>Ops / Marca</b> (no topo) alterna a visão: na <b>Marca</b> ficam só <b>Pré-Aprovados · Aprovados · Contestações</b> (as próprias contestações). A <b>Guardian aprova ou reprova</b> — não há “revisão”.</p>
       </div>
 
       <div>
@@ -576,12 +578,12 @@ const CREATORS = {
   contestacoes: {
     name:"Niina Secrets", id:"#91022", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Niina_Secrets%2C_Junho_de_2017%2C_02.jpg/330px-Niina_Secrets%2C_Junho_de_2017%2C_02.jpg",
     ig:"@niinasecrets", igUrl:"https://instagram.com/niinasecrets", tt:"@niinasecrets", ttUrl:"https://www.tiktok.com/@niinasecrets", yt:"NiinaSecrets", ytUrl:"https://www.youtube.com/channel/UCAkZ7bimIU9m7wT6Th0FcEw", received:"Recebido em 30/05/2026 às 19:40 · v1",
-    guardianFails:["Produto em primeiro plano nos 3 primeiros segundos"], gTone:"warn",
+    guardianFails:["Produto em primeiro plano nos 3 primeiros segundos"], gTone:"bad",
     contestation:'"O produto aparece em primeiro plano já nos 2 primeiros segundos, podem revisar por favor?"',
     timeline:[
       { type:"round", text:"Submissão 1" },
       { type:"submit", title:"Conteúdo enviado (v1)", when:"30/05 19:40" },
-      { type:"system", icon:"bot", color:"bg-violet-500", title:"Análise Guardian", sub:"Indicou revisão", when:"30/05 19:41" },
+      { type:"system", icon:"bot", color:"bg-red-500", title:"Análise Guardian", sub:"Indicou reprovação", when:"30/05 19:41" },
       { type:"reviewer", title:"Feedback enviado", sub:"Produto não aparece em primeiro plano nos 3 primeiros segundos.", when:"30/05 21:00" },
       { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo recusado", sub:"James Goulart", when:"31/05 09:15" },
       { type:"creator", title:"Contestação do creator", text:"O produto aparece sim, já no segundo 2! Deem play do início 🙏", when:"31/05 10:30" },
@@ -859,9 +861,8 @@ function setGuardianForTab(status){
       ? '<i data-lucide="shield-x" class="size-4 text-red-600"></i>'
       : '<i data-lucide="shield-check" class="size-4 text-blue-600"></i>';
   });
-  const tone = CREATORS[status].gTone || "warn";
+  const tone = CREATORS[status].gTone === "ok" ? "ok" : "bad"; // a Guardian aprova ou reprova — sem "revisão"
   const cfg = { ok:["text-blue-600","shield-check","Pré-aprovado pela Guardian"],
-                warn:["text-amber-600","shield-alert","Guardian indicou revisão"],
                 bad:["text-red-600","shield-x","Guardian indicou reprovação"] }[tone];
   const gh = document.getElementById("guardianHeader");
   gh.className = `flex items-center gap-1 text-xs ${cfg[0]} mb-1`;
@@ -903,6 +904,8 @@ document.querySelectorAll(".status-tab").forEach(tab => tab.addEventListener("cl
   statusPill.textContent = label; statusPill.className = `text-[11px] rounded-full px-2 py-0.5 font-medium ${cls}`;
   contestationBox.hidden = !["contestacoes","contestacoesMarca","brandContestacoes"].includes(currentStatus);
   applyCreator(currentStatus);
+  const cnt = tab.querySelector("span")?.textContent.trim(); // contagem da aba clicada (pode agrupar)
+  if(cnt) document.getElementById("videoCount").textContent = `1 de ${cnt}`;
   setGuardianForTab(currentStatus); // veredito da Guardian por conteúdo/aba
   resetLines();
   // limpa o feedback ao trocar de aba (Pendentes regenera o automático no refreshDecision)
@@ -984,9 +987,9 @@ function applyView(view){
   currentView = view;
   document.querySelectorAll(".status-tab[data-ops-only]").forEach(t => { t.hidden = brand; });
   document.querySelectorAll(".status-tab[data-brand-only]").forEach(t => { t.hidden = !brand; });
-  // se a aba ativa ficou escondida, volta para Pré-Aprovados
+  // se a aba ativa ficou escondida, ativa a primeira aba visível
   const active = document.querySelector(".status-tab.active");
-  if(active && active.hidden) document.querySelector('.status-tab[data-status="pendentes"]').click();
+  if(active && active.hidden){ const first = [...document.querySelectorAll(".status-tab")].find(t => !t.hidden); if(first) first.click(); }
   const ops = document.getElementById("viewOps"), br = document.getElementById("viewBrand");
   ops.className = `px-3 py-1 rounded-full ${brand ? "text-slate-300 hover:text-white" : "bg-white text-slate-800"}`;
   br.className = `px-3 py-1 rounded-full ${brand ? "bg-white text-slate-800" : "text-slate-300 hover:text-white"}`;
