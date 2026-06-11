@@ -83,9 +83,9 @@
 
     <!-- status tab bar -->
     <div class="bg-white border-b px-4 flex items-center gap-1 shrink-0">
-      <button class="status-tab active flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes">Pendentes <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">12</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentesReprovados" data-ops-only title="Reprovados 3x pela Guardian — em revisão manual (oculto para a marca)">Pendentes Reprovados <span class="text-[10px] bg-orange-100 text-orange-700 rounded-full px-1.5">5</span></button>
-      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="reprovados">Reprovados <span class="text-[10px] bg-red-100 text-red-700 rounded-full px-1.5">4</span></button>
+      <button class="status-tab active flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentes">Pré-Aprovados <span class="text-[10px] bg-amber-100 text-amber-700 rounded-full px-1.5">12</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="pendentesReprovados" data-ops-only title="Reprovados 3x pela Guardian — em revisão manual (oculto para a marca)">Pré-Reprovados <span class="text-[10px] bg-orange-100 text-orange-700 rounded-full px-1.5">5</span></button>
+      <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="reprovados" data-ops-only>Reprovados <span class="text-[10px] bg-red-100 text-red-700 rounded-full px-1.5">4</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="aprovados">Aprovados <span class="text-[10px] bg-blue-100 text-blue-700 rounded-full px-1.5">37</span></button>
       <button class="status-tab flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500" data-status="contestacoes" data-ops-only>Contestações <span class="text-[10px] bg-violet-100 text-violet-700 rounded-full px-1.5">3</span></button>
     </div>
@@ -248,7 +248,9 @@
             <div id="otherReasonWrap" hidden class="relative shrink-0">
               <button id="otherReasonBtn" class="grid place-items-center rounded-md bg-slate-200 hover:bg-slate-300 size-10" title="Mais opções"><i data-lucide="ellipsis-vertical" class="size-4"></i></button>
               <div id="otherReasonMenu" hidden class="absolute right-0 bottom-12 w-60 rounded-md border bg-white shadow-lg py-1 z-20">
-                <button id="otherReasonOpen" class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"><i data-lucide="flag" class="size-4 text-red-600"></i> Reprovar por outro motivo</button>
+                <button id="otherReasonOpen" data-ops class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"><i data-lucide="flag" class="size-4 text-red-600"></i> Reprovar por outro motivo</button>
+                <button id="brandContest" data-brand hidden class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"><i data-lucide="reply" class="size-4 text-slate-500"></i> Contestar aprovação</button>
+                <button id="brandBlock" data-brand hidden class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2 text-red-600"><i data-lucide="circle-slash" class="size-4"></i> Impedir postagem</button>
               </div>
             </div>
           </div>
@@ -458,7 +460,7 @@
 <div id="otherReasonModal" hidden class="fixed inset-0 z-50 bg-black/40 grid place-items-center p-4">
   <div class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
     <div class="flex items-center gap-2 px-4 py-3 border-b">
-      <i data-lucide="flag" class="size-5 text-red-600"></i><span class="font-semibold">Reprovar por outro motivo</span>
+      <i id="otherReasonIcon" data-lucide="flag" class="size-5 text-red-600"></i><span id="otherReasonTitle" class="font-semibold">Reprovar por outro motivo</span>
       <button id="otherReasonClose" class="ml-auto text-slate-400 hover:text-slate-700"><i data-lucide="x" class="size-5"></i></button>
     </div>
     <div class="p-4 space-y-2">
@@ -738,7 +740,7 @@ document.addEventListener("click", e => {
 
 /* ---------- decision logic ---------- */
 const btn = document.getElementById("decisionBtn");
-let currentStatus = "pendentes", decision = "approve";
+let currentStatus = "pendentes", decision = "approve", currentView = "ops";
 function failCount(){ return [...document.querySelectorAll(".line")].filter(l => l.dataset.state === "fail").length; }
 function anyFail(){ return failCount() > 0; }
 function anyEdited(){ return [...document.querySelectorAll(".line")].some(l => l.dataset.state !== l.dataset.guardian); }
@@ -752,8 +754,13 @@ function refreshDecision(){
   // "Reprovar por outro motivo" (kebab) só em Pendentes E quando a Guardian APROVOU o conteúdo.
   // Se a Guardian reprovou algo, a analista reprova pelas diretrizes e descreve a anomalia no feedback.
   const guardianApproved = ![...document.querySelectorAll(".line")].some(l => l.dataset.guardian === "fail");
-  document.getElementById("otherReasonWrap").hidden = !(currentStatus === "pendentes" && guardianApproved);
+  // kebab: na visão Ops aparece em Pré-Aprovados quando a Guardian aprovou (anomalia);
+  // na visão Marca aparece em Pré-Aprovados com as opções Contestar aprovação / Impedir postagem.
+  const showKebab = currentView === "brand" ? (currentStatus === "pendentes") : (currentStatus === "pendentes" && guardianApproved);
+  document.getElementById("otherReasonWrap").hidden = !showKebab;
   document.getElementById("otherReasonMenu").hidden = true;
+  document.querySelectorAll("#otherReasonMenu [data-ops]").forEach(b => b.hidden = currentView === "brand");
+  document.querySelectorAll("#otherReasonMenu [data-brand]").forEach(b => b.hidden = currentView !== "brand");
   if(currentStatus === "reprovados"){
     if(!anyEdited()){ decision = "none"; setBtn("Reprovado — altere avaliação para reverter", "bg-slate-200 text-slate-500", true); }
     else if(!anyFail()){ decision = "reverter"; setBtn("Reverter e Aprovar", "bg-blue-600 text-white hover:bg-blue-700"); }
@@ -768,7 +775,7 @@ function refreshDecision(){
     setBtn(label, "bg-red-600 text-white hover:bg-red-700");
   } else {
     decision = "approve";
-    setBtn(currentStatus === "contestacoes" ? "Aprovar Contestação" : "Aprovar", "bg-blue-600 text-white hover:bg-blue-700");
+    setBtn(currentStatus === "contestacoes" ? "Aprovar Contestação" : (currentView === "brand" ? "Aprovar conteúdo" : "Aprovar"), "bg-blue-600 text-white hover:bg-blue-700");
   }
 }
 
@@ -801,7 +808,7 @@ function syncAutoFeedback(){
 /* ---------- status tabs ---------- */
 const statusPill = document.getElementById("statusPill");
 const contestationBox = document.getElementById("contestationBox");
-const pill = { pendentes:["Pendente","bg-amber-100 text-amber-700"], pendentesReprovados:["Revisão manual","bg-orange-100 text-orange-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
+const pill = { pendentes:["Pré-aprovado","bg-amber-100 text-amber-700"], pendentesReprovados:["Revisão manual","bg-orange-100 text-orange-700"], reprovados:["Reprovado","bg-red-100 text-red-700"], aprovados:["Aprovado","bg-blue-100 text-blue-700"], contestacoes:["Contestação","bg-violet-100 text-violet-700"] };
 const BUCKET_COUNTS = { pendentes:12, pendentesReprovados:5, reprovados:4, aprovados:37, contestacoes:3 };
 function resetLines(){ // back to Guardian's initial position (clears purple)
   document.querySelectorAll(".line").forEach(l => { l.dataset.state = l.dataset.guardian; paintToggle(l); });
@@ -894,12 +901,24 @@ const otherReasonMenu = document.getElementById("otherReasonMenu");
 const otherReasonModal = document.getElementById("otherReasonModal");
 otherReasonBtn.addEventListener("click", e => { e.stopPropagation(); otherReasonMenu.hidden = !otherReasonMenu.hidden; });
 document.addEventListener("click", () => { otherReasonMenu.hidden = true; }); // fecha ao clicar fora
-document.getElementById("otherReasonOpen").addEventListener("click", () => { otherReasonMenu.hidden = true; document.getElementById("otherReasonText").value = ""; otherReasonModal.hidden = false; lucide.createIcons(); });
+let pendingDone = { label:"Reprovado ✕", cls:"bg-red-700 text-white" };
+function openReason({ title, icon, iconClass, confirm, confirmClass, doneLabel, doneClass }){
+  otherReasonMenu.hidden = true;
+  document.getElementById("otherReasonTitle").textContent = title;
+  const ic = document.getElementById("otherReasonIcon"); ic.setAttribute("data-lucide", icon); ic.className = `size-5 ${iconClass}`;
+  const c = document.getElementById("otherReasonConfirm"); c.textContent = confirm; c.className = `rounded-md px-3 py-2 text-sm font-semibold ${confirmClass}`;
+  document.getElementById("otherReasonText").value = "";
+  pendingDone = { label: doneLabel, cls: doneClass };
+  otherReasonModal.hidden = false; lucide.createIcons();
+}
+document.getElementById("otherReasonOpen").addEventListener("click", () => openReason({ title:"Reprovar por outro motivo", icon:"flag", iconClass:"text-red-600", confirm:"Reprovar", confirmClass:"bg-red-600 text-white hover:bg-red-700", doneLabel:"Reprovado ✕", doneClass:"bg-red-700 text-white" }));
+document.getElementById("brandContest").addEventListener("click", () => openReason({ title:"Contestar aprovação", icon:"reply", iconClass:"text-violet-600", confirm:"Contestar", confirmClass:"bg-violet-600 text-white hover:bg-violet-700", doneLabel:"Aprovação contestada ✓", doneClass:"bg-violet-700 text-white" }));
+document.getElementById("brandBlock").addEventListener("click", () => openReason({ title:"Impedir postagem", icon:"circle-slash", iconClass:"text-red-600", confirm:"Impedir postagem", confirmClass:"bg-red-600 text-white hover:bg-red-700", doneLabel:"Postagem impedida ✕", doneClass:"bg-red-700 text-white" }));
 const closeOther = () => otherReasonModal.hidden = true;
 document.getElementById("otherReasonClose").addEventListener("click", closeOther);
 document.getElementById("otherReasonCancel").addEventListener("click", closeOther);
 otherReasonModal.addEventListener("click", e => { if(e.target === otherReasonModal) closeOther(); });
-document.getElementById("otherReasonConfirm").addEventListener("click", () => { closeOther(); setBtn("Reprovado ✕", "bg-red-700 text-white", true); });
+document.getElementById("otherReasonConfirm").addEventListener("click", () => { closeOther(); setBtn(pendingDone.label, pendingDone.cls, true); });
 
 /* ---------- foto do creator: modal full screen + lupa (nova aba) ---------- */
 const photoModal = document.getElementById("photoModal");
@@ -927,6 +946,7 @@ openChanges(); // show once on first load so testers see what changed
 /* ---------- Ops / Marca view toggle (esconde abas internas da marca) ---------- */
 function applyView(view){
   const brand = view === "brand";
+  currentView = view;
   document.querySelectorAll(".status-tab[data-ops-only]").forEach(t => { t.hidden = brand; });
   // se a aba ativa ficou escondida, volta para Pendentes
   const active = document.querySelector(".status-tab.active");
@@ -934,6 +954,7 @@ function applyView(view){
   const ops = document.getElementById("viewOps"), br = document.getElementById("viewBrand");
   ops.className = `px-3 py-1 rounded-full ${brand ? "text-slate-300 hover:text-white" : "bg-white text-slate-800"}`;
   br.className = `px-3 py-1 rounded-full ${brand ? "bg-white text-slate-800" : "text-slate-300 hover:text-white"}`;
+  refreshDecision(); // atualiza o kebab (opções Ops vs Marca) e o botão
 }
 document.getElementById("viewOps").addEventListener("click", () => applyView("ops"));
 document.getElementById("viewBrand").addEventListener("click", () => applyView("brand"));
