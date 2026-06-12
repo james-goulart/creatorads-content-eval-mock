@@ -42,7 +42,7 @@
     <button id="whatsChanged" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#FF007E] to-[#c026d3] hover:opacity-90 px-4 py-1.5 text-sm font-semibold shadow-lg">
       <i data-lucide="sparkles" class="size-4"></i> O que mudou?
     </button>
-    <div class="flex items-center rounded-full bg-white/10 p-0.5 text-xs font-medium" title="Alterna entre a visão da operação (BL) e a visão da marca">
+    <div class="flex items-center rounded-full bg-white/10 p-0.5 text-xs font-medium" title="Alterna entre a visão da operação (CAds) e a visão da marca">
       <button id="viewOps" class="px-3 py-1 rounded-full bg-white text-slate-800">Ops</button>
       <button id="viewBrand" class="px-3 py-1 rounded-full text-slate-300 hover:text-white">Marca</button>
     </div>
@@ -348,7 +348,7 @@
         <div class="flex-1 overflow-y-auto p-4"><div id="timeline" class="space-y-4"></div></div>
         <!-- internal comment composer -->
         <div class="border-t p-3 bg-slate-50 space-y-2">
-          <div class="text-[10px] text-slate-400 flex items-center gap-1"><i data-lucide="lock" class="size-3"></i> Comentário interno — visível só para usuários BL e da marca</div>
+          <div class="text-[10px] text-slate-400 flex items-center gap-1"><i data-lucide="lock" class="size-3"></i> Comentário interno — visível só para usuários CAds e da marca</div>
           <textarea id="internalCommentInput" rows="2" class="w-full text-sm rounded-md border px-2 py-1.5 resize-none focus:outline-none focus:ring-2 focus:ring-slate-300" placeholder="Escreva um comentário interno…"></textarea>
           <button id="addInternalComment" class="w-full rounded-md py-2 text-sm font-semibold bg-slate-700 text-white hover:bg-slate-800 inline-flex items-center justify-center gap-1"><i data-lucide="lock" class="size-4"></i> Adicionar comentário interno</button>
         </div>
@@ -527,7 +527,7 @@ const CREATORS = {
       { type:"round", text:"Submissão 1" },
       { type:"submit", title:"Conteúdo enviado (v1)", when:"03/06 09:04" },
       { type:"system", icon:"bot", color:"bg-blue-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"03/06 09:05" },
-      { type:"internal", author:"Mariana (BL)", text:"Creator nova na campanha 👀 confirmar se o claim e o “efeito melt” estão exatos antes de aprovar.", when:"03/06 09:20" },
+      { type:"internal", author:"Mariana (CAds)", text:"Creator nova na campanha 👀 confirmar se o claim e o “efeito melt” estão exatos antes de aprovar.", when:"03/06 09:20" },
       { type:"system", icon:"eye", color:"bg-slate-500", title:"Em revisão humana", sub:"James Goulart", when:"agora" },
     ],
   },
@@ -542,7 +542,7 @@ const CREATORS = {
       { type:"submit", title:"Conteúdo enviado (v1)", when:"31/05 14:10" },
       { type:"system", icon:"bot", color:"bg-red-500", title:"Análise Guardian", sub:"Indicou reprovação", when:"31/05 14:11" },
       { type:"reviewer", title:"Feedback enviado", sub:"Ruído constante atrapalha a fala durante todo o vídeo.", when:"31/05 16:25" },
-      { type:"internal", author:"James Goulart (BL)", text:"Áudio realmente baixo. @marca, pedimos regravação com microfone de lapela mais próximo.", when:"31/05 16:40" },
+      { type:"internal", author:"James Goulart (CAds)", text:"Áudio realmente baixo. @marca, pedimos regravação com microfone de lapela mais próximo.", when:"31/05 16:40" },
       { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo reprovado", sub:"James Goulart", when:"31/05 17:00" },
     ],
   },
@@ -564,7 +564,7 @@ const CREATORS = {
       { type:"round", text:"Submissão 3" },
       { type:"submit", title:"Novo conteúdo enviado (v3)", when:"02/06 10:00" },
       { type:"system", icon:"bot", color:"bg-red-500", title:"Análise Guardian", sub:"Indicou reprovação (3ª vez)", when:"02/06 10:01" },
-      { type:"internal", author:"Sistema (BL)", text:"3ª reprovação da Guardian → escalado para revisão manual. ⚠️ Não enviar para a marca.", when:"02/06 10:01" },
+      { type:"internal", author:"Sistema (CAds)", text:"3ª reprovação da Guardian → escalado para revisão manual. ⚠️ Não enviar para a marca.", when:"02/06 10:01" },
       { type:"system", icon:"eye", color:"bg-slate-500", title:"Em revisão humana", sub:"James Goulart", when:"agora" },
     ],
   },
@@ -595,14 +595,14 @@ const CREATORS = {
       { type:"reviewer", title:"Feedback enviado", sub:"Produto não aparece em primeiro plano nos 3 primeiros segundos.", when:"30/05 21:00" },
       { type:"system", icon:"x", color:"bg-red-500", title:"Conteúdo recusado", sub:"James Goulart", when:"31/05 09:15" },
       { type:"creator", title:"Contestação do creator", text:"O produto aparece sim, já no segundo 2! Deem play do início 🙏", when:"31/05 10:30" },
-      { type:"internal", author:"James Goulart (BL)", text:"Revi o vídeo: o produto aparece mesmo por volta do seg. 2. Tendo a aceitar a contestação e aprovar.", when:"31/05 10:45" },
+      { type:"internal", author:"James Goulart (CAds)", text:"Revi o vídeo: o produto aparece mesmo por volta do seg. 2. Tendo a aceitar a contestação e aprovar.", when:"31/05 10:45" },
       { type:"system", icon:"clock", color:"bg-amber-500", title:"Aguardando decisão", sub:"Contestação em análise", when:"agora" },
     ],
   },
   contestacoesMarca: {
-    name:"Camila Coelho", id:"#77310", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Camila_Coelho_2015.jpg/330px-Camila_Coelho_2015.jpg",
-    igF:"10,6M", ttF:"1,6M", ytF:"2,8M",
-    ig:"@camilacoelho", igUrl:"https://instagram.com/camilacoelho", tt:"@camilacoelho", ttUrl:"https://www.tiktok.com/@camilacoelho", yt:"Camila Coelho", ytUrl:"https://www.youtube.com/@CamilaCoelho", received:"Recebido em 28/05/2026 às 09:00 · v1",
+    name:"Maisa Silva", id:"#82640", photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Maisa_Silva_at_Lady_Night_in_2019.jpg/330px-Maisa_Silva_at_Lady_Night_in_2019.jpg",
+    igF:"46M", ttF:"20,5M", ytF:"3,9M",
+    ig:"@maisa", igUrl:"https://instagram.com/maisa", tt:"@maisa", ttUrl:"https://www.tiktok.com/@maisa", yt:"Maisa", ytUrl:"https://www.youtube.com/@Maisa", received:"Recebido em 28/05/2026 às 09:00 · v1",
     guardianFails:[], gTone:"ok",
     contestationLabel:"Contestação da marca",
     contestation:'"Esse conteúdo não reflete o posicionamento atual da marca. Pedimos revisão da aprovação."',
@@ -626,7 +626,7 @@ const CREATORS = {
       { type:"round", text:"Submissão 1" },
       { type:"submit", title:"Conteúdo enviado (v1)", when:"27/05 16:00" },
       { type:"system", icon:"bot", color:"bg-blue-500", title:"Análise Guardian", sub:"Pré-aprovado pela Guardian", when:"27/05 16:01" },
-      { type:"system", icon:"check", color:"bg-blue-500", title:"Conteúdo aprovado", sub:"Operação BL", when:"27/05 17:30" },
+      { type:"system", icon:"check", color:"bg-blue-500", title:"Conteúdo aprovado", sub:"Operação CAds", when:"27/05 17:30" },
       { type:"internal", author:"Marca · Hidrata+", text:"Contestamos a aprovação: o produto aparece pouco e a marca quase não é citada.", when:"28/05 09:10" },
       { type:"system", icon:"clock", color:"bg-amber-500", title:"Aguardando resposta da operação", sub:"Contestação enviada", when:"agora" },
     ],
@@ -717,8 +717,8 @@ function tlItem(t){
     return `<div class="flex items-center gap-2 pt-1"><span class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">${t.text}</span><div class="h-px flex-1 bg-slate-200"></div></div>`;
   if(t.type === "creator")  // distinct UI: violet bubble from the creator
     return `<div class="flex gap-2"><img src="${TL_AVATAR}" class="size-7 rounded-full object-cover shrink-0 mt-0.5"><div class="flex-1"><div class="flex items-center gap-2"><span class="text-xs font-semibold text-violet-700">${t.title}</span><span class="text-[10px] text-slate-400">${t.when}</span></div><div class="mt-1 rounded-2xl rounded-tl-sm border border-violet-200 bg-violet-50 px-3 py-2 text-sm text-slate-700">${t.text}</div></div></div>`;
-  if(t.type === "internal")  // distinct UI: private note (BL + brand only)
-    return `<div class="flex gap-2"><span class="size-7 rounded-full bg-slate-600 grid place-items-center text-white shrink-0 mt-0.5"><i data-lucide="lock" class="size-3.5"></i></span><div class="flex-1"><div class="flex items-center gap-2 flex-wrap"><span class="text-xs font-semibold text-slate-700">${t.author}</span><span class="inline-flex items-center rounded-full bg-slate-200 text-slate-600 px-1.5 text-[10px] font-semibold uppercase tracking-wide">interno</span><span class="text-[10px] text-slate-400">${t.when}</span></div><div class="mt-1 rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">${t.text}</div><div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1"><i data-lucide="eye-off" class="size-3"></i> visível só para BL e marca</div></div></div>`;
+  if(t.type === "internal")  // distinct UI: private note (CAds + brand only)
+    return `<div class="flex gap-2"><span class="size-7 rounded-full bg-slate-600 grid place-items-center text-white shrink-0 mt-0.5"><i data-lucide="lock" class="size-3.5"></i></span><div class="flex-1"><div class="flex items-center gap-2 flex-wrap"><span class="text-xs font-semibold text-slate-700">${t.author}</span><span class="inline-flex items-center rounded-full bg-slate-200 text-slate-600 px-1.5 text-[10px] font-semibold uppercase tracking-wide">interno</span><span class="text-[10px] text-slate-400">${t.when}</span></div><div class="mt-1 rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">${t.text}</div><div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1"><i data-lucide="eye-off" class="size-3"></i> visível só para CAds e marca</div></div></div>`;
   if(t.type === "reviewer")  // post-it style feedback sent to the creator
     return `<div class="flex gap-3 items-start"><span class="size-9 rounded-full bg-amber-400 grid place-items-center text-white shrink-0"><i data-lucide="message-square" class="size-4"></i></span><div class="flex-1"><div class="flex items-center gap-2"><span class="text-sm font-medium">${t.title}</span><span class="text-[10px] text-slate-400">${t.when}</span></div><div class="mt-1 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-slate-700 shadow-sm" style="box-shadow:2px 2px 0 rgba(251,191,36,.25)">${t.sub}</div></div></div>`;
   if(t.type === "submit")
@@ -734,7 +734,7 @@ document.getElementById("addInternalComment").addEventListener("click", () => {
   const input = document.getElementById("internalCommentInput");
   const text = input.value.trim();
   if(!text) return;
-  CREATORS[currentStatus].timeline.push({ type:"internal", author:"James Goulart (BL)", text, when:"agora" });
+  CREATORS[currentStatus].timeline.push({ type:"internal", author:"James Goulart (CAds)", text, when:"agora" });
   renderTimeline(CREATORS[currentStatus].timeline);
   input.value = "";
   const tl = document.getElementById("timeline");

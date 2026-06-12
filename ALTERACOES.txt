@@ -7,9 +7,9 @@ Período: 03/06/2026 → 11/06/2026
 
 RESUMO
 - 1 criação inicial (o mock)
-- 33 rodadas de alterações depois da criação
+- 34 rodadas de alterações depois da criação
 - (+1 commit técnico de redeploy, sem mudança de conteúdo)
-- Total de commits no histórico: 35
+- Total de commits no histórico: 36
 
 ----------------------------------------------------------------
 CRIAÇÃO
@@ -77,6 +77,9 @@ ALTERAÇÕES (em ordem cronológica)
 33) 12/06        Número de seguidores (IG / TikTok / YouTube) ao lado de
                  cada rede no painel do creator. Fonte: base de dados
                  (Social Analytics / Modash).
+34) 12/06        Creator repetido em 2 abas corrigido (Contestações · Marca
+                 agora usa outra creator); "BL" trocado por "CAds" em todo
+                 o protótipo.
 
 ----------------------------------------------------------------
 NOTA TÉCNICA (não conta como alteração de produto)
